@@ -1,28 +1,26 @@
 import { useState } from "react";
 import { Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import usfurLogo from "@/assets/usfur-logo.jpg";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
+  { label: "Accueil", href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Training", href: "#training" },
+  { label: "Formation", href: "#training" },
   { label: "Modules", href: "#modules" },
-  { label: "About Us", href: "#about" },
+  { label: "À Propos", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<"EN" | "FR">("EN");
+  const [lang, setLang] = useState<"EN" | "FR">("FR");
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <a href="#home" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-heading font-bold text-sm">UIF</span>
-          </div>
-          <span className="font-heading font-bold text-foreground hidden sm:inline">UIFTIC</span>
+          <img src={usfurLogo} alt="USFUR Logo" className="h-10 w-auto rounded" />
         </a>
 
         {/* Desktop nav */}
@@ -56,7 +54,7 @@ const Navbar = () => {
           <Button variant="ghost" size="sm" className="gap-1.5">
             <User className="w-4 h-4" /> Login
           </Button>
-          <Button size="sm">Book Consultation</Button>
+          <Button size="sm">Réserver une Consultation</Button>
         </div>
 
         {/* Mobile toggle */}
@@ -81,7 +79,7 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <Button size="sm" className="w-full mt-2">Book Consultation</Button>
+          <Button size="sm" className="w-full mt-2">Réserver une Consultation</Button>
         </div>
       )}
     </nav>
