@@ -1,12 +1,16 @@
 import { MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gold-light via-background to-green-light" />
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img src={heroBg} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px]" />
+      </div>
       {/* Decorative circles */}
       <div className="absolute -left-32 top-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-32 bottom-1/4 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
@@ -56,13 +60,19 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <Button size="lg" className="gap-2 px-8 text-base">
-            <MessageSquare className="w-4 h-4" />
-            Book Consultation
-            <ArrowRight className="w-4 h-4" />
+          <Button size="lg" className="gap-2 px-8 text-base" asChild>
+            <a
+              href="https://wa.me/237690895554?text=Bonjour%2C%20je%20souhaite%20réserver%20une%20consultation%20en%20finance%20islamique."
+              target="_blank"
+              rel="noopener"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Book Consultation
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </Button>
-          <Button variant="outline" size="lg" className="px-8 text-base">
-            View Programs
+          <Button variant="outline" size="lg" className="px-8 text-base" asChild>
+            <a href="#training">View Programs</a>
           </Button>
         </motion.div>
       </div>

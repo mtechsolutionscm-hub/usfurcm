@@ -56,7 +56,11 @@ const Navbar = () => {
               <User className="w-4 h-4" /> Connexion
             </Button>
           </a>
-          <Button size="sm">Réserver une Consultation</Button>
+          <Button size="sm" asChild>
+            <a href="https://wa.me/237690895554?text=Bonjour%2C%20je%20souhaite%20réserver%20une%20consultation%20en%20finance%20islamique." target="_blank" rel="noopener">
+              Réserver une Consultation
+            </a>
+          </Button>
         </div>
 
         {/* Mobile toggle */}
@@ -81,7 +85,11 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <Button size="sm" className="w-full mt-2">Réserver une Consultation</Button>
+          <Button size="sm" className="w-full mt-2" asChild>
+            <a href="https://wa.me/237690895554?text=Bonjour%2C%20je%20souhaite%20réserver%20une%20consultation%20en%20finance%20islamique." target="_blank" rel="noopener">
+              Réserver une Consultation
+            </a>
+          </Button>
         </div>
       )}
     </nav>
