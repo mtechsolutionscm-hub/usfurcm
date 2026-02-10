@@ -51,9 +51,11 @@ const Navbar = () => {
               FR
             </button>
           </div>
-          <Button variant="ghost" size="sm" className="gap-1.5">
-            <User className="w-4 h-4" /> Login
-          </Button>
+          <a href="/auth">
+            <Button variant="ghost" size="sm" className="gap-1.5">
+              <User className="w-4 h-4" /> Connexion
+            </Button>
+          </a>
           <Button size="sm">Réserver une Consultation</Button>
         </div>
 
