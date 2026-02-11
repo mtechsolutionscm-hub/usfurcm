@@ -11,7 +11,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription
 } from "@/components/ui/dialog";
 import {
-  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText
+  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet
 } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
@@ -49,6 +49,7 @@ const AdminDashboard = () => {
   const [tab, setTab] = useState<Tab>("overview");
   const [courses, setCourses] = useState<any[]>([]);
   const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [proformas, setProformas] = useState<any[]>([]);
   const [courseDialogOpen, setCourseDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<any>(null);
   const [courseForm, setCourseForm] = useState<CourseForm>(emptyCourse);
@@ -59,25 +60,25 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchCourses();
     fetchEnrollments();
+    fetchProformas();
 
-    // Realtime subscriptions
     const coursesChannel = supabase
       .channel("admin-courses-realtime")
-      .on("postgres_changes", { event: "*", schema: "public", table: "courses" }, () => {
-        fetchCourses();
-      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "courses" }, () => fetchCourses())
       .subscribe();
-
     const enrollmentsChannel = supabase
       .channel("admin-enrollments-realtime")
-      .on("postgres_changes", { event: "*", schema: "public", table: "enrollments" }, () => {
-        fetchEnrollments();
-      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "enrollments" }, () => fetchEnrollments())
+      .subscribe();
+    const proformasChannel = supabase
+      .channel("admin-proformas-realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "proformas" }, () => fetchProformas())
       .subscribe();
 
     return () => {
       supabase.removeChannel(coursesChannel);
       supabase.removeChannel(enrollmentsChannel);
+      supabase.removeChannel(proformasChannel);
     };
   }, []);
 
@@ -89,6 +90,39 @@ const AdminDashboard = () => {
   const fetchEnrollments = async () => {
     const { data } = await supabase.from("enrollments").select("*, profiles:student_id(full_name), courses:course_id(title)");
     if (data) setEnrollments(data);
+  };
+
+  const fetchProformas = async () => {
+    const { data } = await supabase.from("proformas").select("*").order("created_at", { ascending: false });
+    if (data) setProformas(data);
+  };
+
+  const totalRevenue = proformas.filter(p => p.status === "paid").reduce((s, p) => s + (p.total || 0), 0);
+  const pendingRevenue = proformas.filter(p => p.status === "sent").reduce((s, p) => s + (p.total || 0), 0);
+  const paidCount = proformas.filter(p => p.status === "paid").length;
+  const pendingCount = proformas.filter(p => p.status === "sent").length;
+
+  const exportToCSV = (data: any[], filename: string, headers: string[], getRow: (item: any) => string[]) => {
+    const csvContent = [headers.join(";"), ...data.map(item => getRow(item).join(";"))].join("\n");
+    const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `${filename}_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click(); URL.revokeObjectURL(url);
+  };
+
+  const exportProformas = () => {
+    exportToCSV(proformas, "proformas", ["N°", "Client", "Email", "Téléphone", "Total", "Statut", "Date"],
+      p => [p.proforma_number, p.client_name, p.client_email || "", p.client_phone || "", p.total, p.status, new Date(p.created_at).toLocaleDateString("fr-FR")]
+    );
+    toast({ title: "Export CSV téléchargé ✅" });
+  };
+
+  const exportStudents = () => {
+    exportToCSV(enrollments, "etudiants", ["Étudiant", "Cours", "Statut", "Progression", "Date inscription"],
+      e => [(e as any).profiles?.full_name || "—", (e as any).courses?.title || "—", e.status, `${e.progress}%`, new Date(e.enrolled_at).toLocaleDateString("fr-FR")]
+    );
+    toast({ title: "Export CSV téléchargé ✅" });
   };
 
   const openAddCourse = () => {
@@ -242,6 +276,8 @@ const AdminDashboard = () => {
         {tab === "overview" && (
           <div className="space-y-6">
             <h1 className="text-xl sm:text-2xl font-bold">Vue d'ensemble</h1>
+
+            {/* Platform Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-card p-4 sm:p-6 rounded-xl border border-border">
                 <p className="text-sm text-muted-foreground">Cours Total</p>
@@ -261,8 +297,33 @@ const AdminDashboard = () => {
               </div>
             </div>
 
+            {/* Financial Stats */}
+            <div>
+              <h2 className="text-lg font-semibold mb-3 flex items-center gap-2"><DollarSign className="w-5 h-5 text-primary" /> Statistiques Financières</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-primary/5 p-4 sm:p-6 rounded-xl border border-primary/10">
+                  <p className="text-sm text-muted-foreground">Revenus Encaissés</p>
+                  <p className="text-2xl font-bold text-primary">{totalRevenue.toLocaleString()} <span className="text-sm font-normal">FCFA</span></p>
+                  <p className="text-xs text-muted-foreground mt-1">{paidCount} proforma(s) payé(s)</p>
+                </div>
+                <div className="bg-secondary/5 p-4 sm:p-6 rounded-xl border border-secondary/10">
+                  <p className="text-sm text-muted-foreground">En Attente</p>
+                  <p className="text-2xl font-bold text-secondary">{pendingRevenue.toLocaleString()} <span className="text-sm font-normal">FCFA</span></p>
+                  <p className="text-xs text-muted-foreground mt-1">{pendingCount} proforma(s) en attente</p>
+                </div>
+                <div className="bg-card p-4 sm:p-6 rounded-xl border border-border">
+                  <p className="text-sm text-muted-foreground">Total Proformas</p>
+                  <p className="text-2xl font-bold text-foreground">{proformas.length}</p>
+                </div>
+                <div className="bg-card p-4 sm:p-6 rounded-xl border border-border">
+                  <p className="text-sm text-muted-foreground flex items-center gap-1"><TrendingUp className="w-3 h-3" /> Taux Conversion</p>
+                  <p className="text-2xl font-bold text-foreground">{proformas.length > 0 ? Math.round((paidCount / proformas.length) * 100) : 0}%</p>
+                </div>
+              </div>
+            </div>
+
             {/* Quick actions */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <Button variant="outline" className="gap-2 h-auto py-4 flex-col" onClick={openAddCourse}>
                 <Plus className="w-5 h-5" />
                 <span className="text-xs">Ajouter un cours</span>
@@ -271,11 +332,38 @@ const AdminDashboard = () => {
                 <Radio className="w-5 h-5" />
                 <span className="text-xs">Gérer le direct</span>
               </Button>
-              <Button variant="outline" className="gap-2 h-auto py-4 flex-col" onClick={() => setTab("students")}>
-                <Users className="w-5 h-5" />
-                <span className="text-xs">Voir les étudiants</span>
+              <Button variant="outline" className="gap-2 h-auto py-4 flex-col" onClick={exportProformas}>
+                <Download className="w-5 h-5" />
+                <span className="text-xs">Export Proformas</span>
+              </Button>
+              <Button variant="outline" className="gap-2 h-auto py-4 flex-col" onClick={exportStudents}>
+                <Sheet className="w-5 h-5" />
+                <span className="text-xs">Export Étudiants</span>
               </Button>
             </div>
+
+            {/* Recent proformas */}
+            {proformas.length > 0 && (
+              <div>
+                <h2 className="text-lg font-semibold mb-3">Derniers Proformas</h2>
+                <div className="space-y-2">
+                  {proformas.slice(0, 5).map(p => (
+                    <div key={p.id} className="bg-card p-3 rounded-lg border border-border flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-sm">{p.proforma_number} — {p.client_name}</p>
+                        <p className="text-xs text-muted-foreground">{new Date(p.created_at).toLocaleDateString("fr-FR")}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-sm">{p.total?.toLocaleString()} FCFA</p>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${p.status === "paid" ? "bg-primary/10 text-primary" : p.status === "sent" ? "bg-blue-100 text-blue-700" : "bg-muted text-muted-foreground"}`}>
+                          {p.status === "paid" ? "Payé" : p.status === "sent" ? "Envoyé" : "Brouillon"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -349,7 +437,12 @@ const AdminDashboard = () => {
         {/* STUDENTS */}
         {tab === "students" && (
           <div className="space-y-6">
-            <h1 className="text-xl sm:text-2xl font-bold">Étudiants ({enrollments.length})</h1>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <h1 className="text-xl sm:text-2xl font-bold">Étudiants ({enrollments.length})</h1>
+              <Button variant="outline" size="sm" onClick={exportStudents} className="gap-2">
+                <Download className="w-4 h-4" /> Export CSV
+              </Button>
+            </div>
             <div className="bg-card rounded-xl border border-border overflow-x-auto">
               <table className="w-full text-sm min-w-[500px]">
                 <thead className="bg-muted">
