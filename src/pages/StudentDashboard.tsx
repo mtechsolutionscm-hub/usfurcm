@@ -153,19 +153,78 @@ const StudentDashboard = () => {
 
   const buildProformaPDFHtml = (p: any) => {
     const items = (p.items as ProformaItem[]) || [];
+    const logoUrl = window.location.origin + '/favicon.jpg';
     return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Proforma ${p.proforma_number}</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;padding:40px;color:#1a1a1a;max-width:800px;margin:0 auto}.header{border-bottom:3px solid #0d6b3d;padding-bottom:20px;margin-bottom:30px}.header h1{color:#0d6b3d;font-size:22px}.header p{font-size:11px;color:#555;line-height:1.6}.proforma-title{text-align:center;background:#0d6b3d;color:white;padding:10px 30px;font-size:18px;font-weight:bold;border-radius:4px;margin-bottom:25px}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:25px}.info-box{background:#f8f9fa;padding:15px;border-radius:6px;border-left:3px solid #0d6b3d}.info-box h3{font-size:11px;text-transform:uppercase;color:#0d6b3d;margin-bottom:8px}table{width:100%;border-collapse:collapse;margin-bottom:20px}thead th{background:#0d6b3d;color:white;padding:10px;text-align:left;font-size:11px}tbody td{padding:10px;border-bottom:1px solid #e5e5e5;font-size:12px}tbody tr:nth-child(even){background:#f8f9fa}.total-row{background:#0d6b3d!important;color:white;font-weight:bold;font-size:14px}.total-row td{border:none;padding:12px}.notes{background:#fefce8;border:1px solid #fde047;padding:15px;border-radius:6px;margin-bottom:20px}.notes h3{font-size:11px;color:#854d0e;margin-bottom:6px}.footer{text-align:center;border-top:2px solid #e5e5e5;padding-top:20px;margin-top:30px;font-size:10px;color:#888}@media print{body{padding:20px}@page{margin:15mm}}</style></head><body>
-<div class="header"><h1>USFUR Islamic Finance Training & Consulting</h1><p>Cameroun - Zone CEMAC | Tél: +237 690 895 554</p></div>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;color:#1a1a1a;max-width:800px;margin:0 auto;position:relative;min-height:100vh}
+.page{padding:0;position:relative}
+.logo-header{text-align:center;padding:25px 20px 10px}
+.logo-header img{height:80px;margin-bottom:5px}
+.logo-header .company-name{font-size:20px;font-weight:bold;color:#1a1a1a}
+.logo-header .company-name .green{color:#0d6b3d}
+.logo-header .company-name .gold{color:#c8a415}
+.logo-header .tagline{font-size:9px;color:#888;margin-top:2px}
+.green-banner{background:linear-gradient(135deg,#0d6b3d,#15803d);color:white;text-align:center;padding:10px 20px;font-size:11px;font-weight:600;letter-spacing:0.5px;margin-bottom:5px}
+.separator{width:60px;height:3px;background:#c8a415;margin:0 auto 20px}
+.content{padding:20px 40px;position:relative;z-index:2}
+.watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.04;width:350px;height:350px;z-index:1}
+.proforma-title{text-align:center;background:#0d6b3d;color:white;padding:10px 30px;font-size:16px;font-weight:bold;border-radius:4px;margin-bottom:20px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px}
+.info-box{background:#f8f9fa;padding:12px;border-radius:6px;border-left:3px solid #0d6b3d}
+.info-box h3{font-size:10px;text-transform:uppercase;color:#0d6b3d;margin-bottom:6px;font-weight:700}
+.info-box p{font-size:11px;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin-bottom:15px}
+thead th{background:#0d6b3d;color:white;padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase}
+tbody td{padding:8px 10px;border-bottom:1px solid #e5e5e5;font-size:11px}
+tbody tr:nth-child(even){background:#f8f9fa}
+.total-row{background:#0d6b3d!important;color:white;font-weight:bold;font-size:13px}
+.total-row td{border:none;padding:10px}
+.notes{background:#fefce8;border:1px solid #fde047;padding:12px;border-radius:6px;margin-bottom:15px}
+.notes h3{font-size:10px;color:#854d0e;margin-bottom:4px;text-transform:uppercase}
+.notes p{font-size:11px}
+.footer{background:#222;color:white;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;font-size:10px;position:relative;margin-top:auto}
+.footer-left{line-height:1.8}
+.footer-right{text-align:right;line-height:1.8}
+.footer-left strong,.footer-right strong{color:#4ade80}
+@media print{body{padding:0}@page{margin:10mm}.footer{position:fixed;bottom:0;left:0;right:0}}
+</style></head><body>
+<div class="page">
+<div class="logo-header">
+  <img src="${logoUrl}" alt="USFUR" style="border-radius:8px">
+  <div class="company-name"><span class="green">Usfur Islamic</span> Finance</div>
+  <div class="company-name">Training <span class="gold">&</span> Consulting</div>
+  <div class="tagline">l'indispensable pour réussir...</div>
+</div>
+<div class="green-banner">Formation - Certification - Solutions Fintech - Produits Financiers - Audit</div>
+<div class="separator"></div>
+
+<div class="content">
 <div class="proforma-title">FACTURE PROFORMA N° ${p.proforma_number}</div>
 <div class="info-grid">
-<div class="info-box"><h3>Client</h3><p><strong>${p.client_name}</strong>${p.client_phone ? `<br>Tél: ${p.client_phone}` : ""}${p.client_email ? `<br>Email: ${p.client_email}` : ""}</p></div>
-<div class="info-box"><h3>Informations</h3><p>Date: ${new Date(p.created_at).toLocaleDateString("fr-FR")}<br>Devise: FCFA${p.valid_until ? `<br>Valide jusqu'au: ${new Date(p.valid_until).toLocaleDateString("fr-FR")}` : ""}</p></div>
+<div class="info-box"><h3>Client</h3><p><strong>${p.client_name}</strong>${p.client_phone ? `<br>📱 ${p.client_phone}` : ""}${p.client_email ? `<br>📧 ${p.client_email}` : ""}</p></div>
+<div class="info-box"><h3>Détails Proforma</h3><p>📅 Date: ${new Date(p.created_at).toLocaleDateString("fr-FR")}<br>💱 Devise: FCFA${p.valid_until ? `<br>⏳ Valide jusqu'au: ${new Date(p.valid_until).toLocaleDateString("fr-FR")}` : ""}<br>📋 N°: ${p.proforma_number}</p></div>
 </div>
-<table><thead><tr><th style="width:40px">#</th><th>Description</th><th style="width:50px;text-align:center">Qté</th><th style="width:110px;text-align:right">Prix Unit.</th><th style="width:110px;text-align:right">Total</th></tr></thead><tbody>
+<table><thead><tr><th style="width:35px">#</th><th>Description</th><th style="width:45px;text-align:center">Qté</th><th style="width:100px;text-align:right">Prix Unit.</th><th style="width:100px;text-align:right">Total</th></tr></thead><tbody>
 ${items.map((item, i) => `<tr><td>${i + 1}</td><td>${item.description}</td><td style="text-align:center">${item.quantity}</td><td style="text-align:right">${item.unit_price?.toLocaleString("fr-FR")} FCFA</td><td style="text-align:right">${item.total?.toLocaleString("fr-FR")} FCFA</td></tr>`).join("")}
-<tr class="total-row"><td colspan="4" style="text-align:right">TOTAL</td><td style="text-align:right">${p.total?.toLocaleString("fr-FR")} FCFA</td></tr></tbody></table>
+<tr class="total-row"><td colspan="4" style="text-align:right">TOTAL TTC</td><td style="text-align:right">${p.total?.toLocaleString("fr-FR")} FCFA</td></tr></tbody></table>
 ${p.notes ? `<div class="notes"><h3>Notes</h3><p>${p.notes}</p></div>` : ""}
-<div class="footer"><p><strong>USFUR Islamic Finance Training & Consulting</strong><br>Pour toute question: +237 690 895 554<br>💬 WhatsApp: wa.me/237690895554</p></div></body></html>`;
+</div>
+
+<div class="footer">
+<div class="footer-left">
+<strong>RCCM:</strong> RC/DLA 2022/B/6388<br>
+<strong>NIU:</strong> M112217804579T<br>
+<strong>Email:</strong> usfurislamicfinancetraining@gmail.com
+</div>
+<div class="footer-right">
+📞 +237 676 253 577<br>
+📞 +237 690 895 554<br>
+📍 Akwa, Rue des écoles en face Phoenix
+</div>
+</div>
+</div>
+</body></html>`;
   };
 
   const downloadPDF = (p: any) => {
