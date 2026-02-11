@@ -11,7 +11,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription
 } from "@/components/ui/dialog";
 import {
-  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet, Bell, Award, ClipboardCheck, BarChart3, MessageSquare
+  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet, Bell, Award, ClipboardCheck, BarChart3, MessageSquare, Search, Filter
 } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
@@ -60,6 +60,8 @@ const AdminDashboard = () => {
   const [courseForm, setCourseForm] = useState<CourseForm>(emptyCourse);
   const [activeLiveRoom, setActiveLiveRoom] = useState<any>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [studentSearch, setStudentSearch] = useState("");
+  const [studentCourseFilter, setStudentCourseFilter] = useState("");
   const [viewCourse, setViewCourse] = useState<any>(null);
 
   useEffect(() => {
@@ -474,7 +476,18 @@ const AdminDashboard = () => {
             }
             studentMap[e.student_id].enrollments.push(e);
           }
-          const groupedStudents = Object.entries(studentMap);
+
+          const searchLower = studentSearch.toLowerCase();
+          const groupedStudents = Object.entries(studentMap).filter(([_, { profile, enrollments: stuEnrolls }]) => {
+            // Text search filter
+            const matchesSearch = !searchLower || 
+              (profile?.full_name || "").toLowerCase().includes(searchLower) ||
+              (profile?.organization_name || "").toLowerCase().includes(searchLower) ||
+              (profile?.phone || "").toLowerCase().includes(searchLower);
+            // Course filter
+            const matchesCourse = !studentCourseFilter || stuEnrolls.some(e => e.course_id === studentCourseFilter);
+            return matchesSearch && matchesCourse;
+          });
 
           return (
           <div className="space-y-6">
@@ -484,6 +497,33 @@ const AdminDashboard = () => {
                 <Download className="w-4 h-4" /> Export CSV
               </Button>
             </div>
+
+            {/* Search & Filter */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative flex-1 max-w-sm">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  value={studentSearch}
+                  onChange={e => setStudentSearch(e.target.value)}
+                  placeholder="Rechercher par nom, organisation, téléphone..."
+                  className="pl-9"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <select
+                  className="border border-border rounded-lg px-3 py-2 text-sm bg-card"
+                  value={studentCourseFilter}
+                  onChange={e => setStudentCourseFilter(e.target.value)}
+                >
+                  <option value="">Tous les cours</option>
+                  {courses.map(c => (
+                    <option key={c.id} value={c.id}>Module {c.module_number}: {c.title}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div className="bg-card rounded-xl border border-border overflow-x-auto">
               <table className="w-full text-sm min-w-[600px]">
                 <thead className="bg-muted">
@@ -530,7 +570,9 @@ const AdminDashboard = () => {
                     );
                   })}
                   {groupedStudents.length === 0 && (
-                    <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">Aucun étudiant inscrit</td></tr>
+                    <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">
+                      {studentSearch || studentCourseFilter ? "Aucun résultat pour cette recherche" : "Aucun étudiant inscrit"}
+                    </td></tr>
                   )}
                 </tbody>
               </table>
