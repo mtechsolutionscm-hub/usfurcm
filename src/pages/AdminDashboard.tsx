@@ -11,8 +11,9 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription
 } from "@/components/ui/dialog";
 import {
-  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet, Bell, Award, ClipboardCheck, BarChart3, MessageSquare, Search, Filter, Building2
+  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet, Bell, Award, ClipboardCheck, BarChart3, MessageSquare, Search, Filter, Building2, Home
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
 import QuizManager from "@/components/QuizManager";
@@ -52,6 +53,7 @@ const emptyCourse: CourseForm = {
 const AdminDashboard = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("overview");
   const [courses, setCourses] = useState<any[]>([]);
   const [enrollments, setEnrollments] = useState<any[]>([]);
@@ -271,7 +273,14 @@ const AdminDashboard = () => {
         <img src={usfurLogo} alt="USFUR" className="h-10 rounded" />
         <p className="text-xs text-muted-foreground mt-1">Panneau Administrateur</p>
       </div>
-      <nav className="flex-1 p-2 space-y-1">
+      <nav className="flex-1 p-2 space-y-1 overflow-y-auto">
+        <button
+          onClick={() => navigate("/")}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
+        >
+          <Home className="w-4 h-4" />
+          Accueil
+        </button>
         {sidebarItems.map(({ icon: Icon, label, tab: t }) => (
           <button
             key={t}
@@ -294,7 +303,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-background font-admin">
-      <aside className="hidden lg:flex w-64 bg-card border-r border-border flex-col">
+      <aside className="hidden lg:flex w-64 bg-card border-r border-border flex-col overflow-hidden">
         {sidebarContent}
       </aside>
       <div className="lg:hidden">
