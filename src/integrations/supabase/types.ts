@@ -217,29 +217,62 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address: string | null
           avatar_url: string | null
+          city: string | null
+          country: string | null
           created_at: string
           full_name: string | null
           id: string
+          organization_name: string | null
+          organization_type: string | null
           phone: string | null
+          position: string | null
+          responsible_email: string | null
+          responsible_name: string | null
+          responsible_phone: string | null
+          subscribed_products: Json | null
+          subscribed_services: Json | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          address?: string | null
           avatar_url?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          organization_name?: string | null
+          organization_type?: string | null
           phone?: string | null
+          position?: string | null
+          responsible_email?: string | null
+          responsible_name?: string | null
+          responsible_phone?: string | null
+          subscribed_products?: Json | null
+          subscribed_services?: Json | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          address?: string | null
           avatar_url?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          organization_name?: string | null
+          organization_type?: string | null
           phone?: string | null
+          position?: string | null
+          responsible_email?: string | null
+          responsible_name?: string | null
+          responsible_phone?: string | null
+          subscribed_products?: Json | null
+          subscribed_services?: Json | null
           updated_at?: string
           user_id?: string
         }
