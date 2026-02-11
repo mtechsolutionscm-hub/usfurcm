@@ -88,6 +88,20 @@ const Navbar = () => {
       {/* Mobile menu */}
       {open && (
         <div className="lg:hidden bg-card border-b border-border px-4 pb-4 space-y-2">
+          <div className="flex rounded-full border border-border overflow-hidden text-xs w-fit mb-2">
+            <button
+              onClick={() => setLang("EN")}
+              className={`px-3 py-1.5 font-medium transition-colors ${lang === "EN" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLang("FR")}
+              className={`px-3 py-1.5 font-medium transition-colors ${lang === "FR" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"}`}
+            >
+              FR
+            </button>
+          </div>
           {navLinks.map((l) => (
             <a
               key={l.href}
