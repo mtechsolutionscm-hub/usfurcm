@@ -12,7 +12,7 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui/select";
-import { Plus, Trash2, Eye, MessageCircle, FileText, Pencil, Building } from "lucide-react";
+import { Plus, Trash2, Eye, MessageCircle, FileText, Pencil, Building, Users, UserPlus } from "lucide-react";
 
 const WHATSAPP = "https://wa.me/237690895554";
 
@@ -34,8 +34,13 @@ const ProformaManager = ({ courses }: ProformaManagerProps) => {
   const [companyInfo, setCompanyInfo] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [companyDialogOpen, setCompanyDialogOpen] = useState(false);
+  const [studentPickerOpen, setStudentPickerOpen] = useState(false);
   const [viewProforma, setViewProforma] = useState<any>(null);
   const [editingProforma, setEditingProforma] = useState<any>(null);
+  const [students, setStudents] = useState<any[]>([]);
+  const [studentSearch, setStudentSearch] = useState("");
+
+  const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
 
   const [form, setForm] = useState({
     client_name: "",
@@ -53,7 +58,35 @@ const ProformaManager = ({ courses }: ProformaManagerProps) => {
   useEffect(() => {
     fetchProformas();
     fetchCompanyInfo();
+    fetchStudents();
   }, []);
+
+  const fetchStudents = async () => {
+    // Get all enrollments with profile and course data
+    const { data } = await supabase
+      .from("enrollments")
+      .select("student_id, course_id, courses:course_id(title, module_number), profiles:student_id(full_name, phone)");
+    if (!data) return;
+
+    // Group by student
+    const studentMap: Record<string, { id: string; name: string; phone: string; courses: any[] }> = {};
+    for (const e of data) {
+      const profile = e.profiles as any;
+      const course = e.courses as any;
+      if (!studentMap[e.student_id]) {
+        studentMap[e.student_id] = {
+          id: e.student_id,
+          name: profile?.full_name || "Étudiant",
+          phone: profile?.phone || "",
+          courses: [],
+        };
+      }
+      if (course) {
+        studentMap[e.student_id].courses.push(course);
+      }
+    }
+    setStudents(Object.values(studentMap));
+  };
 
   const fetchProformas = async () => {
     const { data } = await supabase.from("proformas").select("*").order("created_at", { ascending: false });
@@ -116,7 +149,34 @@ const ProformaManager = ({ courses }: ProformaManagerProps) => {
 
   const openCreate = () => {
     setEditingProforma(null);
+    setSelectedStudentId(null);
     setForm({ client_name: "", client_email: "", client_phone: "", notes: "", valid_days: 30, items: [{ description: "", quantity: 1, unit_price: 0, total: 0 }] });
+    setDialogOpen(true);
+  };
+
+  const generateForStudent = (student: any) => {
+    const price = 250000;
+    const items: ProformaItem[] = student.courses
+      .sort((a: any, b: any) => (a.module_number || 0) - (b.module_number || 0))
+      .map((c: any) => ({
+        description: `Module ${c.module_number}: ${c.title}`,
+        quantity: 1,
+        unit_price: price,
+        total: price,
+      }));
+    if (items.length === 0) items.push({ description: "", quantity: 1, unit_price: 0, total: 0 });
+
+    setEditingProforma(null);
+    setSelectedStudentId(student.id);
+    setForm({
+      client_name: student.name,
+      client_email: "",
+      client_phone: student.phone || "",
+      notes: "",
+      valid_days: 30,
+      items,
+    });
+    setStudentPickerOpen(false);
     setDialogOpen(true);
   };
 
@@ -163,6 +223,7 @@ const ProformaManager = ({ courses }: ProformaManagerProps) => {
       notes: form.notes.trim() || null,
       valid_until: validUntil.toISOString(),
       created_by: user?.id,
+      user_id: selectedStudentId || null,
     };
 
     if (editingProforma) {
@@ -219,6 +280,9 @@ const ProformaManager = ({ courses }: ProformaManagerProps) => {
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={() => setCompanyDialogOpen(true)} className="gap-1">
             <Building className="w-4 h-4" /> Infos Entreprise
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => { setStudentSearch(""); setStudentPickerOpen(true); }} className="gap-1">
+            <UserPlus className="w-4 h-4" /> Depuis un étudiant
           </Button>
           <Button onClick={openCreate} className="gap-2">
             <Plus className="w-4 h-4" /> Nouveau Proforma
@@ -450,6 +514,47 @@ const ProformaManager = ({ courses }: ProformaManagerProps) => {
             <Button variant="outline" onClick={() => setCompanyDialogOpen(false)}>Annuler</Button>
             <Button onClick={saveCompanyInfo}>Enregistrer</Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Student Picker Dialog */}
+      <Dialog open={studentPickerOpen} onOpenChange={setStudentPickerOpen}>
+        <DialogContent className="sm:max-w-md max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Générer un proforma pour un étudiant</DialogTitle>
+            <DialogDescription>Sélectionnez un étudiant inscrit pour pré-remplir le proforma avec ses cours.</DialogDescription>
+          </DialogHeader>
+          <Input
+            placeholder="Rechercher un étudiant..."
+            value={studentSearch}
+            onChange={(e) => setStudentSearch(e.target.value)}
+            className="mb-3"
+          />
+          <div className="space-y-2">
+            {students
+              .filter(s => s.name.toLowerCase().includes(studentSearch.toLowerCase()))
+              .map((s) => (
+                <div
+                  key={s.id}
+                  className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-accent/50 cursor-pointer transition-colors"
+                  onClick={() => generateForStudent(s)}
+                >
+                  <div>
+                    <p className="font-medium text-sm">{s.name}</p>
+                    {s.phone && <p className="text-xs text-muted-foreground">{s.phone}</p>}
+                    <p className="text-xs text-muted-foreground">
+                      {s.courses.length} cours: {s.courses.map((c: any) => `M${c.module_number}`).join(", ")}
+                    </p>
+                  </div>
+                  <Button size="sm" variant="outline" className="gap-1 text-xs shrink-0">
+                    <FileText className="w-3 h-3" /> Générer
+                  </Button>
+                </div>
+              ))}
+            {students.length === 0 && (
+              <p className="text-center text-muted-foreground text-sm py-8">Aucun étudiant inscrit trouvé.</p>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </div>
