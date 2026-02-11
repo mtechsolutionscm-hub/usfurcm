@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      company_info: {
+        Row: {
+          address: string | null
+          email: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          niu: string | null
+          phone: string | null
+          rccm: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          niu?: string | null
+          phone?: string | null
+          rccm?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          niu?: string | null
+          phone?: string | null
+          rccm?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       courses: {
         Row: {
           created_at: string
@@ -206,6 +242,69 @@ export type Database = {
           phone?: string | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      proformas: {
+        Row: {
+          client_email: string | null
+          client_name: string
+          client_phone: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          id: string
+          items: Json
+          notes: string | null
+          proforma_number: string
+          status: string
+          subtotal: number
+          tax_amount: number
+          tax_rate: number
+          total: number
+          updated_at: string
+          user_id: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          client_email?: string | null
+          client_name: string
+          client_phone?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          proforma_number: string
+          status?: string
+          subtotal?: number
+          tax_amount?: number
+          tax_rate?: number
+          total?: number
+          updated_at?: string
+          user_id?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          client_email?: string | null
+          client_name?: string
+          client_phone?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          id?: string
+          items?: Json
+          notes?: string | null
+          proforma_number?: string
+          status?: string
+          subtotal?: number
+          tax_amount?: number
+          tax_rate?: number
+          total?: number
+          updated_at?: string
+          user_id?: string | null
+          valid_until?: string | null
         }
         Relationships: []
       }
