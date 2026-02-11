@@ -304,7 +304,7 @@ ${p.notes ? `<div class="notes"><h3>Notes</h3><p>${p.notes}</p></div>` : ""}
   };
 
   return (
-    <div className="min-h-screen flex bg-background">
+    <div className="min-h-screen flex bg-background font-student">
       <aside className="hidden lg:flex w-64 bg-card border-r border-border flex-col">
         {sidebarContent}
       </aside>
