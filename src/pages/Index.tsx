@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -14,19 +12,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  const { user, isAdmin, isTeacher, isStudent, loading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (loading) return;
-    if (user) {
-      if (isAdmin || isTeacher) {
-        navigate("/admin", { replace: true });
-      } else if (isStudent) {
-        navigate("/student", { replace: true });
-      }
-    }
-  }, [user, isAdmin, isTeacher, isStudent, loading, navigate]);
+  const { loading } = useAuth();
 
   if (loading) {
     return (
@@ -35,8 +21,6 @@ const Index = () => {
       </div>
     );
   }
-
-  if (user) return null; // Will redirect
 
   return (
     <div className="min-h-screen">

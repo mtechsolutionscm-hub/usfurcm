@@ -31,11 +31,11 @@ const MobileSidebar = ({ children }: MobileSidebarProps) => {
       >
         <button
           onClick={() => setOpen(false)}
-          className="lg:hidden absolute top-3 right-3 p-1 rounded hover:bg-muted"
+          className="lg:hidden absolute top-3 right-3 p-1 rounded hover:bg-muted z-10"
         >
           <X className="w-4 h-4" />
         </button>
-        <div onClick={() => setOpen(false)}>
+        <div className="flex flex-col h-full overflow-y-auto" onClick={() => setOpen(false)}>
           {children}
         </div>
       </aside>
