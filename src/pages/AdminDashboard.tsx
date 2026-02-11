@@ -88,8 +88,28 @@ const AdminDashboard = () => {
   };
 
   const fetchEnrollments = async () => {
-    const { data } = await supabase.from("enrollments").select("*, profiles:student_id(full_name), courses:course_id(title)");
-    if (data) setEnrollments(data);
+    const { data: enrollData } = await supabase.from("enrollments").select("*");
+    if (!enrollData) return;
+    
+    // Fetch all profiles and courses to join manually (no FK from enrollments.student_id to profiles)
+    const studentIds = [...new Set(enrollData.map(e => e.student_id))];
+    const courseIds = [...new Set(enrollData.map(e => e.course_id))];
+    
+    const [profilesRes, coursesRes] = await Promise.all([
+      studentIds.length > 0 ? supabase.from("profiles").select("user_id, full_name, phone, organization_name").in("user_id", studentIds) : { data: [] },
+      courseIds.length > 0 ? supabase.from("courses").select("id, title, module_number").in("id", courseIds) : { data: [] },
+    ]);
+    
+    const profilesMap = Object.fromEntries((profilesRes.data || []).map(p => [p.user_id, p]));
+    const coursesMap = Object.fromEntries((coursesRes.data || []).map(c => [c.id, c]));
+    
+    const enriched = enrollData.map(e => ({
+      ...e,
+      profiles: profilesMap[e.student_id] || null,
+      courses: coursesMap[e.course_id] || null,
+    }));
+    
+    setEnrollments(enriched);
   };
 
   const fetchProformas = async () => {
@@ -119,8 +139,8 @@ const AdminDashboard = () => {
   };
 
   const exportStudents = () => {
-    exportToCSV(enrollments, "etudiants", ["Étudiant", "Cours", "Statut", "Progression", "Date inscription"],
-      e => [(e as any).profiles?.full_name || "—", (e as any).courses?.title || "—", e.status, `${e.progress}%`, new Date(e.enrolled_at).toLocaleDateString("fr-FR")]
+    exportToCSV(enrollments, "etudiants", ["Étudiant", "Téléphone", "Organisation", "Cours", "Statut", "Progression", "Date inscription"],
+      e => [e.profiles?.full_name || "—", e.profiles?.phone || "—", e.profiles?.organization_name || "—", e.courses?.title || "—", e.status, `${e.progress}%`, new Date(e.enrolled_at).toLocaleDateString("fr-FR")]
     );
     toast({ title: "Export CSV téléchargé ✅" });
   };
@@ -444,10 +464,12 @@ const AdminDashboard = () => {
               </Button>
             </div>
             <div className="bg-card rounded-xl border border-border overflow-x-auto">
-              <table className="w-full text-sm min-w-[500px]">
+              <table className="w-full text-sm min-w-[600px]">
                 <thead className="bg-muted">
                   <tr>
                     <th className="text-left p-3">Étudiant</th>
+                    <th className="text-left p-3">Téléphone</th>
+                    <th className="text-left p-3">Organisation</th>
                     <th className="text-left p-3">Cours</th>
                     <th className="text-left p-3">Statut</th>
                     <th className="text-left p-3">Progression</th>
@@ -457,8 +479,10 @@ const AdminDashboard = () => {
                 <tbody>
                   {enrollments.map((e) => (
                     <tr key={e.id} className="border-t border-border hover:bg-muted/50">
-                      <td className="p-3 font-medium">{(e as any).profiles?.full_name || "—"}</td>
-                      <td className="p-3">{(e as any).courses?.title || "—"}</td>
+                      <td className="p-3 font-medium">{e.profiles?.full_name || "—"}</td>
+                      <td className="p-3 text-xs">{e.profiles?.phone || "—"}</td>
+                      <td className="p-3 text-xs">{e.profiles?.organization_name || "—"}</td>
+                      <td className="p-3">{e.courses?.title || "—"}</td>
                       <td className="p-3"><span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs">{e.status}</span></td>
                       <td className="p-3">
                         <div className="flex items-center gap-2">
@@ -474,7 +498,7 @@ const AdminDashboard = () => {
                     </tr>
                   ))}
                   {enrollments.length === 0 && (
-                    <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">Aucun étudiant inscrit</td></tr>
+                    <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">Aucun étudiant inscrit</td></tr>
                   )}
                 </tbody>
               </table>
