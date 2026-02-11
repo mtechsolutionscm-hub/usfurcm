@@ -57,6 +57,26 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchCourses();
     fetchEnrollments();
+
+    // Realtime subscriptions
+    const coursesChannel = supabase
+      .channel("admin-courses-realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "courses" }, () => {
+        fetchCourses();
+      })
+      .subscribe();
+
+    const enrollmentsChannel = supabase
+      .channel("admin-enrollments-realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "enrollments" }, () => {
+        fetchEnrollments();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(coursesChannel);
+      supabase.removeChannel(enrollmentsChannel);
+    };
   }, []);
 
   const fetchCourses = async () => {

@@ -28,6 +28,26 @@ const StudentDashboard = () => {
     fetchCourses();
     fetchEnrollments();
     fetchProfile();
+
+    // Realtime subscriptions
+    const coursesChannel = supabase
+      .channel("student-courses-realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "courses" }, () => {
+        fetchCourses();
+      })
+      .subscribe();
+
+    const enrollmentsChannel = supabase
+      .channel("student-enrollments-realtime")
+      .on("postgres_changes", { event: "*", schema: "public", table: "enrollments" }, () => {
+        fetchEnrollments();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(coursesChannel);
+      supabase.removeChannel(enrollmentsChannel);
+    };
   }, [user]);
 
   const fetchCourses = async () => {
