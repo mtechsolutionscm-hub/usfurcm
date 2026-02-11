@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import {
-  LayoutDashboard, BookOpen, Radio, User, LogOut, GraduationCap, FileQuestion
+  LayoutDashboard, BookOpen, Radio, User, LogOut, GraduationCap, FileQuestion, MessageCircle, FileText, Eye
 } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
@@ -13,7 +13,9 @@ import QuizTaker from "@/components/QuizTaker";
 import LiveRoom from "@/components/LiveRoom";
 import MobileSidebar from "@/components/MobileSidebar";
 
-type Tab = "overview" | "courses" | "live" | "quizzes" | "profile";
+const WHATSAPP = "https://wa.me/237690895554";
+
+type Tab = "overview" | "courses" | "live" | "quizzes" | "proformas" | "profile";
 
 const StudentDashboard = () => {
   const { user, signOut } = useAuth();
@@ -23,11 +25,13 @@ const StudentDashboard = () => {
   const [myEnrollments, setMyEnrollments] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
   const [activeLiveRoom, setActiveLiveRoom] = useState<any>(null);
+  const [myProformas, setMyProformas] = useState<any[]>([]);
 
   useEffect(() => {
     fetchCourses();
     fetchEnrollments();
     fetchProfile();
+    fetchProformas();
 
     // Realtime subscriptions
     const coursesChannel = supabase
@@ -67,6 +71,12 @@ const StudentDashboard = () => {
     if (data) setProfile(data);
   };
 
+  const fetchProformas = async () => {
+    if (!user) return;
+    const { data } = await supabase.from("proformas").select("*").eq("user_id", user.id).order("created_at", { ascending: false });
+    if (data) setMyProformas(data);
+  };
+
   const enroll = async (courseId: string) => {
     if (!user) return;
     const { error } = await supabase.from("enrollments").insert({ student_id: user.id, course_id: courseId });
@@ -86,6 +96,7 @@ const StudentDashboard = () => {
     { icon: BookOpen, label: "Mes Cours", tab: "courses" },
     { icon: Radio, label: "Cours en Direct", tab: "live" },
     { icon: FileQuestion, label: "Quiz", tab: "quizzes" },
+    { icon: FileText, label: "Mes Proformas", tab: "proformas" },
     { icon: User, label: "Mon Profil", tab: "profile" },
   ];
 
@@ -209,6 +220,11 @@ const StudentDashboard = () => {
                           <Radio className="w-3 h-3" /> Rejoindre en direct
                         </Button>
                       )}
+                      <Button size="sm" variant="outline" className="gap-1 text-xs" asChild>
+                        <a href={`${WHATSAPP}?text=${encodeURIComponent(`Bonjour, je souhaite obtenir les modalités et le proforma pour le module "${course.title}". Merci.`)}`} target="_blank" rel="noopener">
+                          <MessageCircle className="w-3 h-3" /> Modalités & Proforma
+                        </a>
+                      </Button>
                     </div>
                   </div>
                 );
@@ -245,6 +261,41 @@ const StudentDashboard = () => {
         )}
 
         {tab === "quizzes" && <QuizTaker courseIds={enrolledCourseIds} />}
+
+        {tab === "proformas" && (
+          <div className="space-y-6">
+            <h1 className="text-xl sm:text-2xl font-bold">Mes Proformas</h1>
+            {myProformas.length > 0 ? (
+              <div className="space-y-3">
+                {myProformas.map((p) => (
+                  <div key={p.id} className="bg-card p-4 rounded-xl border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h3 className="font-semibold text-sm">{p.proforma_number}</h3>
+                      <p className="text-sm font-bold">{p.total?.toLocaleString()} FCFA</p>
+                      <p className="text-xs text-muted-foreground">{new Date(p.created_at).toLocaleDateString("fr-FR")}</p>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${p.status === "paid" ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{p.status === "paid" ? "Payé" : p.status === "sent" ? "Envoyé" : "Brouillon"}</span>
+                    </div>
+                    <Button size="sm" variant="outline" className="gap-1" asChild>
+                      <a href={`${WHATSAPP}?text=${encodeURIComponent(`Bonjour, je souhaite procéder au paiement du proforma ${p.proforma_number} d'un montant de ${p.total?.toLocaleString()} FCFA. Merci.`)}`} target="_blank" rel="noopener">
+                        <MessageCircle className="w-3 h-3" /> Payer via WhatsApp
+                      </a>
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-card p-12 rounded-xl border border-border text-center space-y-4">
+                <FileText className="w-12 h-12 mx-auto text-muted-foreground" />
+                <p className="text-muted-foreground">Aucun proforma pour le moment.</p>
+                <Button variant="outline" asChild>
+                  <a href={`${WHATSAPP}?text=${encodeURIComponent("Bonjour, je souhaite obtenir un proforma pour une formation USFUR. Merci.")}`} target="_blank" rel="noopener">
+                    <MessageCircle className="w-4 h-4 mr-2" /> Demander un proforma
+                  </a>
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
 
         {tab === "profile" && (
           <div className="space-y-6">

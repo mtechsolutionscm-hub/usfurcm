@@ -11,15 +11,16 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription
 } from "@/components/ui/dialog";
 import {
-  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye
+  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText
 } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
 import QuizManager from "@/components/QuizManager";
 import LiveRoom from "@/components/LiveRoom";
 import MobileSidebar from "@/components/MobileSidebar";
+import ProformaManager from "@/components/ProformaManager";
 
-type Tab = "overview" | "courses" | "students" | "live" | "quizzes" | "settings";
+type Tab = "overview" | "courses" | "students" | "live" | "quizzes" | "proformas" | "settings";
 
 interface CourseForm {
   title: string;
@@ -179,6 +180,7 @@ const AdminDashboard = () => {
     { icon: Users, label: "Étudiants", tab: "students" },
     { icon: Radio, label: "Cours en Direct", tab: "live" },
     { icon: FileQuestion, label: "Quiz", tab: "quizzes" },
+    { icon: FileText, label: "Proformas", tab: "proformas" },
     { icon: Settings, label: "Paramètres", tab: "settings" },
   ];
 
@@ -441,6 +443,8 @@ const AdminDashboard = () => {
         )}
 
         {tab === "quizzes" && <QuizManager courses={courses} />}
+
+        {tab === "proformas" && <ProformaManager courses={courses} />}
 
         {tab === "settings" && (
           <div className="space-y-6">
