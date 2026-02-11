@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import {
-  LayoutDashboard, BookOpen, Radio, User, LogOut, GraduationCap, FileQuestion, MessageCircle, FileText, Eye
+  LayoutDashboard, BookOpen, Radio, User, LogOut, GraduationCap, FileQuestion, MessageCircle, FileText, Eye, Download
 } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
@@ -267,21 +267,43 @@ const StudentDashboard = () => {
             <h1 className="text-xl sm:text-2xl font-bold">Mes Proformas</h1>
             {myProformas.length > 0 ? (
               <div className="space-y-3">
-                {myProformas.map((p) => (
-                  <div key={p.id} className="bg-card p-4 rounded-xl border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <h3 className="font-semibold text-sm">{p.proforma_number}</h3>
-                      <p className="text-sm font-bold">{p.total?.toLocaleString()} FCFA</p>
-                      <p className="text-xs text-muted-foreground">{new Date(p.created_at).toLocaleDateString("fr-FR")}</p>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${p.status === "paid" ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{p.status === "paid" ? "Payé" : p.status === "sent" ? "Envoyé" : "Brouillon"}</span>
+                {myProformas.map((p) => {
+                  const downloadPDF = () => {
+                    const items = (p.items as any[]) || [];
+                    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Proforma ${p.proforma_number}</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;padding:40px;color:#1a1a1a;max-width:800px;margin:0 auto}.header{border-bottom:3px solid #0d6b3d;padding-bottom:20px;margin-bottom:30px}.header h1{color:#0d6b3d;font-size:22px}.proforma-title{text-align:center;background:#0d6b3d;color:white;padding:10px 30px;font-size:18px;font-weight:bold;border-radius:4px;margin-bottom:25px}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:25px}.info-box{background:#f8f9fa;padding:15px;border-radius:6px;border-left:3px solid #0d6b3d}.info-box h3{font-size:11px;text-transform:uppercase;color:#0d6b3d;margin-bottom:8px}table{width:100%;border-collapse:collapse;margin-bottom:20px}thead th{background:#0d6b3d;color:white;padding:10px;text-align:left;font-size:11px}tbody td{padding:10px;border-bottom:1px solid #e5e5e5;font-size:12px}.total-row{background:#0d6b3d!important;color:white;font-weight:bold;font-size:14px}.total-row td{border:none;padding:12px}.footer{text-align:center;border-top:2px solid #e5e5e5;padding-top:20px;margin-top:30px;font-size:10px;color:#888}@media print{body{padding:20px}}</style></head><body>
+<div class="header"><h1>USFUR Islamic Finance Training & Consulting</h1></div>
+<div class="proforma-title">FACTURE PROFORMA N° ${p.proforma_number}</div>
+<div class="info-grid"><div class="info-box"><h3>Client</h3><p><strong>${p.client_name}</strong>${p.client_phone ? `<br>Tél: ${p.client_phone}` : ""}</p></div><div class="info-box"><h3>Date</h3><p>${new Date(p.created_at).toLocaleDateString("fr-FR")}</p></div></div>
+<table><thead><tr><th>#</th><th>Description</th><th>Qté</th><th style="text-align:right">P.U.</th><th style="text-align:right">Total</th></tr></thead><tbody>
+${items.map((item: any, i: number) => `<tr><td>${i+1}</td><td>${item.description}</td><td>${item.quantity}</td><td style="text-align:right">${item.unit_price?.toLocaleString("fr-FR")} FCFA</td><td style="text-align:right">${item.total?.toLocaleString("fr-FR")} FCFA</td></tr>`).join("")}
+<tr class="total-row"><td colspan="4" style="text-align:right">TOTAL</td><td style="text-align:right">${p.total?.toLocaleString("fr-FR")} FCFA</td></tr></tbody></table>
+<div class="footer"><p>Pour toute question: +237 690 895 554</p></div></body></html>`;
+                    const blob = new Blob([html], { type: "text/html" });
+                    const win = window.open(URL.createObjectURL(blob), "_blank");
+                    if (win) win.onload = () => setTimeout(() => win.print(), 500);
+                  };
+                  return (
+                    <div key={p.id} className="bg-card p-4 rounded-xl border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div>
+                        <h3 className="font-semibold text-sm">{p.proforma_number}</h3>
+                        <p className="text-sm font-bold">{p.total?.toLocaleString()} FCFA</p>
+                        <p className="text-xs text-muted-foreground">{new Date(p.created_at).toLocaleDateString("fr-FR")}</p>
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${p.status === "paid" ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>{p.status === "paid" ? "Payé" : p.status === "sent" ? "Envoyé" : "Brouillon"}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="outline" className="gap-1" onClick={downloadPDF}>
+                          <Download className="w-3 h-3" /> PDF
+                        </Button>
+                        <Button size="sm" variant="outline" className="gap-1" asChild>
+                          <a href={`${WHATSAPP}?text=${encodeURIComponent(`Bonjour, je souhaite procéder au paiement du proforma ${p.proforma_number} d'un montant de ${p.total?.toLocaleString()} FCFA. Merci.`)}`} target="_blank" rel="noopener">
+                            <MessageCircle className="w-3 h-3" /> Payer via WhatsApp
+                          </a>
+                        </Button>
+                      </div>
                     </div>
-                    <Button size="sm" variant="outline" className="gap-1" asChild>
-                      <a href={`${WHATSAPP}?text=${encodeURIComponent(`Bonjour, je souhaite procéder au paiement du proforma ${p.proforma_number} d'un montant de ${p.total?.toLocaleString()} FCFA. Merci.`)}`} target="_blank" rel="noopener">
-                        <MessageCircle className="w-3 h-3" /> Payer via WhatsApp
-                      </a>
-                    </Button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="bg-card p-12 rounded-xl border border-border text-center space-y-4">
