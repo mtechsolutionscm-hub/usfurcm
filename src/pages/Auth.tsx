@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { BookOpen, Shield, Award } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
+import authBg from "@/assets/auth-bg.jpg";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,7 +27,6 @@ const Auth = () => {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
 
-        // Fetch role to redirect
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           const { data: roles } = await supabase
@@ -63,46 +64,89 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="w-full max-w-md space-y-8">
-        <div className="flex flex-col items-center gap-4">
-          <a href="/">
-            <img src={usfurLogo} alt="USFUR" className="h-16 w-auto rounded-lg" />
-          </a>
-          <h1 className="text-2xl font-bold text-foreground">
-            {isLogin ? "Connexion" : "Inscription"}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Plateforme de formation USFUR
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left panel - Image & branding (hidden on mobile) */}
+      <div
+        className="hidden lg:flex lg:w-1/2 relative items-end justify-center p-12"
+        style={{
+          backgroundImage: `url(${authBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative z-10 text-white space-y-6 max-w-md mb-16">
+          <h2 className="text-3xl font-bold leading-tight">
+            Formation d'excellence en Finance Islamique
+          </h2>
+          <p className="text-white/80 text-sm leading-relaxed">
+            Rejoignez des centaines de professionnels formés par USFUR dans la zone CEMAC.
+          </p>
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-full bg-white/15 backdrop-blur flex items-center justify-center">
+                <BookOpen className="h-4 w-4" />
+              </div>
+              <span className="text-sm">8 modules de formation certifiés</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-full bg-white/15 backdrop-blur flex items-center justify-center">
+                <Shield className="h-4 w-4" />
+              </div>
+              <span className="text-sm">Conforme à la Charia</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-full bg-white/15 backdrop-blur flex items-center justify-center">
+                <Award className="h-4 w-4" />
+              </div>
+              <span className="text-sm">Certificat de réussite délivré</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right panel - Auth form */}
+      <div className="flex-1 flex items-center justify-center bg-background px-6 py-12">
+        <div className="w-full max-w-md space-y-8">
+          <div className="flex flex-col items-center gap-4">
+            <a href="/">
+              <img src={usfurLogo} alt="USFUR" className="h-16 w-auto rounded-lg" />
+            </a>
+            <h1 className="text-2xl font-bold text-foreground">
+              {isLogin ? "Connexion" : "Inscription"}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Plateforme de formation USFUR
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 bg-card p-6 rounded-xl border border-border shadow-sm">
+            {!isLogin && (
+              <div className="space-y-2">
+                <Label htmlFor="fullName">Nom complet</Label>
+                <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Votre nom" required />
+              </div>
+            )}
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="votre@email.com" required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Mot de passe</Label>
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} />
+            </div>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Chargement..." : isLogin ? "Se connecter" : "S'inscrire"}
+            </Button>
+          </form>
+
+          <p className="text-center text-sm text-muted-foreground">
+            {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}
+            <button onClick={() => setIsLogin(!isLogin)} className="ml-1 text-primary font-medium hover:underline">
+              {isLogin ? "S'inscrire" : "Se connecter"}
+            </button>
           </p>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4 bg-card p-6 rounded-xl border border-border">
-          {!isLogin && (
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Nom complet</Label>
-              <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Votre nom" required />
-            </div>
-          )}
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="votre@email.com" required />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Mot de passe</Label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} />
-          </div>
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Chargement..." : isLogin ? "Se connecter" : "S'inscrire"}
-          </Button>
-        </form>
-
-        <p className="text-center text-sm text-muted-foreground">
-          {isLogin ? "Pas encore de compte ?" : "Déjà un compte ?"}
-          <button onClick={() => setIsLogin(!isLogin)} className="ml-1 text-primary font-medium hover:underline">
-            {isLogin ? "S'inscrire" : "Se connecter"}
-          </button>
-        </p>
       </div>
     </div>
   );
