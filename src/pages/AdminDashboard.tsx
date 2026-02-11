@@ -455,10 +455,21 @@ const AdminDashboard = () => {
         )}
 
         {/* STUDENTS */}
-        {tab === "students" && (
+        {tab === "students" && (() => {
+          // Group enrollments by student
+          const studentMap: Record<string, { profile: any; enrollments: any[] }> = {};
+          for (const e of enrollments) {
+            if (!studentMap[e.student_id]) {
+              studentMap[e.student_id] = { profile: e.profiles, enrollments: [] };
+            }
+            studentMap[e.student_id].enrollments.push(e);
+          }
+          const groupedStudents = Object.entries(studentMap);
+
+          return (
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h1 className="text-xl sm:text-2xl font-bold">Étudiants ({enrollments.length})</h1>
+              <h1 className="text-xl sm:text-2xl font-bold">Étudiants ({groupedStudents.length})</h1>
               <Button variant="outline" size="sm" onClick={exportStudents} className="gap-2">
                 <Download className="w-4 h-4" /> Export CSV
               </Button>
@@ -470,41 +481,53 @@ const AdminDashboard = () => {
                     <th className="text-left p-3">Étudiant</th>
                     <th className="text-left p-3">Téléphone</th>
                     <th className="text-left p-3">Organisation</th>
-                    <th className="text-left p-3">Cours</th>
-                    <th className="text-left p-3">Statut</th>
-                    <th className="text-left p-3">Progression</th>
-                    <th className="text-left p-3">Inscrit le</th>
+                    <th className="text-left p-3">Modules inscrits</th>
+                    <th className="text-left p-3">Progression moy.</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {enrollments.map((e) => (
-                    <tr key={e.id} className="border-t border-border hover:bg-muted/50">
-                      <td className="p-3 font-medium">{e.profiles?.full_name || "—"}</td>
-                      <td className="p-3 text-xs">{e.profiles?.phone || "—"}</td>
-                      <td className="p-3 text-xs">{e.profiles?.organization_name || "—"}</td>
-                      <td className="p-3">{e.courses?.title || "—"}</td>
-                      <td className="p-3"><span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs">{e.status}</span></td>
-                      <td className="p-3">
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden max-w-[100px]">
-                            <div className="h-full bg-primary rounded-full" style={{ width: `${e.progress}%` }} />
+                  {groupedStudents.map(([studentId, { profile, enrollments: studentEnrolls }]) => {
+                    const avgProgress = studentEnrolls.length > 0
+                      ? Math.round(studentEnrolls.reduce((s, e) => s + (e.progress || 0), 0) / studentEnrolls.length)
+                      : 0;
+                    return (
+                      <tr key={studentId} className="border-t border-border hover:bg-muted/50 align-top">
+                        <td className="p-3 font-medium">{profile?.full_name || "—"}</td>
+                        <td className="p-3 text-xs">{profile?.phone || "—"}</td>
+                        <td className="p-3 text-xs">{profile?.organization_name || "—"}</td>
+                        <td className="p-3">
+                          <div className="space-y-1">
+                            {studentEnrolls.map(e => (
+                              <div key={e.id} className="flex items-center gap-2 text-xs">
+                                <span className={`px-1.5 py-0.5 rounded text-[10px] ${e.status === 'completed' ? 'bg-primary/10 text-primary' : 'bg-blue-100 text-blue-700'}`}>
+                                  {e.status === 'completed' ? '✓' : '•'}
+                                </span>
+                                <span>{e.courses?.title || "—"}</span>
+                                <span className="text-muted-foreground ml-auto">{e.progress}%</span>
+                              </div>
+                            ))}
                           </div>
-                          <span className="text-xs">{e.progress}%</span>
-                        </div>
-                      </td>
-                      <td className="p-3 text-xs text-muted-foreground">
-                        {new Date(e.enrolled_at).toLocaleDateString("fr-FR")}
-                      </td>
-                    </tr>
-                  ))}
-                  {enrollments.length === 0 && (
-                    <tr><td colSpan={7} className="p-6 text-center text-muted-foreground">Aucun étudiant inscrit</td></tr>
+                        </td>
+                        <td className="p-3">
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden max-w-[80px]">
+                              <div className="h-full bg-primary rounded-full" style={{ width: `${avgProgress}%` }} />
+                            </div>
+                            <span className="text-xs">{avgProgress}%</span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  {groupedStudents.length === 0 && (
+                    <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">Aucun étudiant inscrit</td></tr>
                   )}
                 </tbody>
               </table>
             </div>
           </div>
-        )}
+          );
+        })()}
 
         {/* LIVE */}
         {tab === "live" && (
