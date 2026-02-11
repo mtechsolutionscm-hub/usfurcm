@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, UserPlus, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 
 const navLinks = [
@@ -15,6 +17,8 @@ const navLinks = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<"EN" | "FR">("FR");
+  const { user, isAdmin, isTeacher } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border">
@@ -51,11 +55,20 @@ const Navbar = () => {
               FR
             </button>
           </div>
-          <a href="/auth">
-            <Button variant="ghost" size="sm" className="gap-1.5">
-              <User className="w-4 h-4" /> Connexion
+          {user ? (
+            <Button size="sm" className="gap-1.5" onClick={() => navigate(isAdmin || isTeacher ? "/admin" : "/student")}>
+              <User className="w-4 h-4" /> Mon Espace
             </Button>
-          </a>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => navigate("/auth")}>
+                <LogIn className="w-4 h-4" /> Connexion
+              </Button>
+              <Button variant="secondary" size="sm" className="gap-1.5" onClick={() => navigate("/auth?mode=signup")}>
+                <UserPlus className="w-4 h-4" /> S'inscrire
+              </Button>
+            </>
+          )}
           <Button size="sm" asChild>
             <a href="https://wa.me/237690895554?text=Bonjour%2C%20je%20souhaite%20réserver%20une%20consultation%20en%20finance%20islamique." target="_blank" rel="noopener">
               Réserver une Consultation
@@ -85,9 +98,23 @@ const Navbar = () => {
               {l.label}
             </a>
           ))}
-          <Button size="sm" className="w-full mt-2" asChild>
+          {user ? (
+            <Button size="sm" className="w-full mt-2 gap-2" onClick={() => { setOpen(false); navigate(isAdmin || isTeacher ? "/admin" : "/student"); }}>
+              <User className="w-4 h-4" /> Mon Espace
+            </Button>
+          ) : (
+            <>
+              <Button variant="outline" size="sm" className="w-full mt-2 gap-2" onClick={() => { setOpen(false); navigate("/auth"); }}>
+                <LogIn className="w-4 h-4" /> Connexion
+              </Button>
+              <Button size="sm" className="w-full mt-1 gap-2" onClick={() => { setOpen(false); navigate("/auth?mode=signup"); }}>
+                <UserPlus className="w-4 h-4" /> S'inscrire
+              </Button>
+            </>
+          )}
+          <Button size="sm" variant="outline" className="w-full mt-2" asChild>
             <a href="https://wa.me/237690895554?text=Bonjour%2C%20je%20souhaite%20réserver%20une%20consultation%20en%20finance%20islamique." target="_blank" rel="noopener">
-              Réserver une Consultation
+              Réserver
             </a>
           </Button>
         </div>

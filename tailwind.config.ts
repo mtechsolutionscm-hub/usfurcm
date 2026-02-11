@@ -14,8 +14,12 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['"Plus Jakarta Sans"', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
+        body: ['"DM Sans"', 'sans-serif'],
+        'student-heading': ['Merriweather', 'serif'],
+        'student-body': ['Lora', 'serif'],
+        'admin-heading': ['Roboto', 'sans-serif'],
+        'admin-body': ['"Source Sans 3"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

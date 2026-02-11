@@ -259,7 +259,7 @@ const AdminDashboard = () => {
   );
 
   return (
-    <div className="min-h-screen flex bg-background">
+    <div className="min-h-screen flex bg-background font-admin">
       <aside className="hidden lg:flex w-64 bg-card border-r border-border flex-col">
         {sidebarContent}
       </aside>

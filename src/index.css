@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&family=Merriweather:wght@400;700&family=Lora:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 @layer base {
   :root {
@@ -81,11 +81,27 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Academic fonts for student dashboard */
+  .font-student body, .font-student {
+    font-family: 'Lora', serif;
+  }
+  .font-student h1, .font-student h2, .font-student h3, .font-student h4, .font-student h5, .font-student h6 {
+    font-family: 'Merriweather', serif;
+  }
+
+  /* Administrative fonts for admin dashboard */
+  .font-admin body, .font-admin {
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .font-admin h1, .font-admin h2, .font-admin h3, .font-admin h4, .font-admin h5, .font-admin h6 {
+    font-family: 'Roboto', sans-serif;
   }
 }
 
