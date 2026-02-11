@@ -11,7 +11,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription
 } from "@/components/ui/dialog";
 import {
-  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet
+  LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet, Bell, Award, ClipboardCheck, BarChart3, MessageSquare
 } from "lucide-react";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 import NotificationBell from "@/components/NotificationBell";
@@ -20,8 +20,13 @@ import LiveRoom from "@/components/LiveRoom";
 import MobileSidebar from "@/components/MobileSidebar";
 import ProformaManager from "@/components/ProformaManager";
 import AIAssistant from "@/components/AIAssistant";
+import AnnouncementsManager from "@/components/admin/AnnouncementsManager";
+import CertificateManager from "@/components/admin/CertificateManager";
+import CourseAnalytics from "@/components/admin/CourseAnalytics";
+import AttendanceTracker from "@/components/admin/AttendanceTracker";
+import BulkCommunication from "@/components/admin/BulkCommunication";
 
-type Tab = "overview" | "courses" | "students" | "live" | "quizzes" | "proformas" | "settings";
+type Tab = "overview" | "courses" | "students" | "live" | "quizzes" | "proformas" | "announcements" | "certificates" | "analytics" | "attendance" | "communication" | "settings";
 
 interface CourseForm {
   title: string;
@@ -236,6 +241,11 @@ const AdminDashboard = () => {
     { icon: Radio, label: "Cours en Direct", tab: "live" },
     { icon: FileQuestion, label: "Quiz", tab: "quizzes" },
     { icon: FileText, label: "Proformas", tab: "proformas" },
+    { icon: Bell, label: "Annonces", tab: "announcements" },
+    { icon: Award, label: "Certificats", tab: "certificates" },
+    { icon: BarChart3, label: "Analytique", tab: "analytics" },
+    { icon: ClipboardCheck, label: "Présence", tab: "attendance" },
+    { icon: MessageSquare, label: "Communication", tab: "communication" },
     { icon: Settings, label: "Paramètres", tab: "settings" },
   ];
 
@@ -586,6 +596,12 @@ const AdminDashboard = () => {
         {tab === "quizzes" && <QuizManager courses={courses} />}
 
         {tab === "proformas" && <ProformaManager courses={courses} />}
+
+        {tab === "announcements" && <AnnouncementsManager />}
+        {tab === "certificates" && <CertificateManager />}
+        {tab === "analytics" && <CourseAnalytics />}
+        {tab === "attendance" && <AttendanceTracker courses={courses} />}
+        {tab === "communication" && <BulkCommunication />}
 
         {tab === "settings" && (
           <div className="space-y-6">
