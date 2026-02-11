@@ -22,6 +22,7 @@ import NotificationBell from "@/components/NotificationBell";
 import QuizTaker from "@/components/QuizTaker";
 import LiveRoom from "@/components/LiveRoom";
 import MobileSidebar from "@/components/MobileSidebar";
+import AIAssistant from "@/components/AIAssistant";
 
 const WHATSAPP = "https://wa.me/237690895554";
 
@@ -680,6 +681,7 @@ ${p.notes ? `<div class="notes"><h3>Notes</h3><p>${p.notes}</p></div>` : ""}
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <AIAssistant />
     </div>
   );
 };

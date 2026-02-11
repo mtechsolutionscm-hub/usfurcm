@@ -19,6 +19,7 @@ import QuizManager from "@/components/QuizManager";
 import LiveRoom from "@/components/LiveRoom";
 import MobileSidebar from "@/components/MobileSidebar";
 import ProformaManager from "@/components/ProformaManager";
+import AIAssistant from "@/components/AIAssistant";
 
 type Tab = "overview" | "courses" | "students" | "live" | "quizzes" | "proformas" | "settings";
 
@@ -574,6 +575,7 @@ const AdminDashboard = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <AIAssistant isAdmin />
     </div>
   );
 };
