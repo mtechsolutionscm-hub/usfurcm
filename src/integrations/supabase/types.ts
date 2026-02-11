@@ -139,6 +139,78 @@ export type Database = {
           },
         ]
       }
+      institutions: {
+        Row: {
+          address: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          niu: string | null
+          notes: string | null
+          phone: string | null
+          rccm: string | null
+          responsible_email: string | null
+          responsible_name: string | null
+          responsible_phone: string | null
+          responsible_position: string | null
+          subscribed_products: Json | null
+          subscribed_services: Json | null
+          type: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          niu?: string | null
+          notes?: string | null
+          phone?: string | null
+          rccm?: string | null
+          responsible_email?: string | null
+          responsible_name?: string | null
+          responsible_phone?: string | null
+          responsible_position?: string | null
+          subscribed_products?: Json | null
+          subscribed_services?: Json | null
+          type?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          niu?: string | null
+          notes?: string | null
+          phone?: string | null
+          rccm?: string | null
+          responsible_email?: string | null
+          responsible_name?: string | null
+          responsible_phone?: string | null
+          responsible_position?: string | null
+          subscribed_products?: Json | null
+          subscribed_services?: Json | null
+          type?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       live_messages: {
         Row: {
           content: string
