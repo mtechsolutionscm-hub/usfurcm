@@ -126,8 +126,15 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="py-24 bg-card">
-      <div className="container mx-auto px-4">
+    <section id="services" className="relative py-24 bg-card overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><path d='M40 0 L80 40 L40 80 L0 40 Z M40 15 L65 40 L40 65 L15 40 Z' fill='none' stroke='%23006A4E' stroke-width='1.2'/></svg>")`,
+        }}
+      />
+      <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl" />
+      <div className="container mx-auto px-4 relative">
         <div className="text-center mb-16">
           <h3 className="text-primary font-medium text-sm tracking-wider uppercase mb-2">Nos Services</h3>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
@@ -144,5 +151,6 @@ const ServicesSection = () => {
     </section>
   );
 };
+
 
 export default ServicesSection;
