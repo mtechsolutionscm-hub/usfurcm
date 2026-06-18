@@ -1,5 +1,7 @@
 import { Shield, Star, Heart, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
+import aboutImg from "@/assets/module-4-governance.jpg";
+import accentImg from "@/assets/module-2-products.jpg";
 
 const values = [
   { icon: Shield, title: "Integrity", desc: "Upholding the highest ethical standards in all our dealings." },
@@ -10,15 +12,38 @@ const values = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 bg-card">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-3">About Us</h2>
-          <p className="text-primary font-medium mb-6">Your Partner in Islamic Finance Excellence</p>
-          <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Usfur Islamic Finance Training & Consulting is a leading institution dedicated to promoting and implementing Sharia-compliant financial solutions across Africa and beyond. Founded with a vision to bridge the gap between conventional finance and Islamic principles, we provide comprehensive training and consulting services.
-          </p>
+    <section id="about" className="relative py-24 bg-card overflow-hidden">
+      <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
+      <div className="absolute bottom-0 -left-20 w-80 h-80 rounded-full bg-secondary/10 blur-3xl" />
+      <div className="container mx-auto px-4 relative">
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border">
+              <img src={aboutImg} alt="Islamic finance governance" className="w-full h-[420px] object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-secondary/20" />
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-40 h-40 rounded-2xl overflow-hidden shadow-xl ring-4 ring-card hidden md:block">
+              <img src={accentImg} alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -top-4 -left-4 w-24 h-24 rounded-full bg-gradient-to-br from-secondary to-primary opacity-90 -z-0" />
+          </motion.div>
+
+          <div>
+            <span className="inline-block px-3 py-1 rounded-full bg-gold-light text-secondary text-xs font-medium mb-3">
+              About Us
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-3">Your Partner in Islamic Finance Excellence</h2>
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Usfur Islamic Finance Training & Consulting is a leading institution dedicated to promoting and implementing Sharia-compliant financial solutions across Africa and beyond. Founded with a vision to bridge the gap between conventional finance and Islamic principles, we provide comprehensive training and consulting services.
+            </p>
+          </div>
         </div>
+
 
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-16">
           <motion.div
