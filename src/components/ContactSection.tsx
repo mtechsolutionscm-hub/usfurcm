@@ -11,7 +11,7 @@ const ContactSection = () => {
         }}
       />
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-2">Contactez-nous</h2>
           <p className="text-muted-foreground">Commencez votre parcours dès aujourd'hui</p>
