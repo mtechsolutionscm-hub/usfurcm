@@ -3,8 +3,15 @@ import { Button } from "@/components/ui/button";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="relative py-24 bg-background overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><g fill='none' stroke='%23006A4E' stroke-width='1'><polygon points='50,5 95,50 50,95 5,50'/><polygon points='50,20 80,50 50,80 20,50'/><polygon points='50,35 65,50 50,65 35,50'/></g></svg>")`,
+        }}
+      />
+
+      <div className="container mx-auto px-4 relative">
         <div className="text-center mb-12">
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-2">Contactez-nous</h2>
           <p className="text-muted-foreground">Commencez votre parcours dès aujourd'hui</p>

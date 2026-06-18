@@ -51,8 +51,16 @@ const CEMACSection = () => {
   const [activeTab, setActiveTab] = useState<string>("Per Participant");
 
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="relative py-24 bg-background overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'><g fill='none' stroke='%23C9A227' stroke-width='1'><circle cx='30' cy='30' r='28'/><path d='M30 2 L30 58 M2 30 L58 30 M10 10 L50 50 M50 10 L10 50'/></g></svg>")`,
+        }}
+      />
+      <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-primary/5 blur-3xl" />
+      <div className="container mx-auto px-4 relative">
+
         <div className="text-center mb-12">
           <span className="inline-block px-3 py-1 rounded-full bg-gold-light text-secondary text-xs font-medium mb-3">
             -30% Revised Pricing
