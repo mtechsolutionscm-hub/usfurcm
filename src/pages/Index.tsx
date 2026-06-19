@@ -2,6 +2,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
+import ServicesCTA from "@/components/ServicesCTA";
 import TrainingSection from "@/components/TrainingSection";
 import ModulesSection from "@/components/ModulesSection";
 import CEMACSection from "@/components/CEMACSection";
@@ -27,6 +28,7 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <ServicesSection />
+      <ServicesCTA />
       <TrainingSection />
       <ModulesSection />
       <CEMACSection />
