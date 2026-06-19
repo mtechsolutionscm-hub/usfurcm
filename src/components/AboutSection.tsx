@@ -1,7 +1,8 @@
 import { Shield, Star, Heart, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
-import aboutImg from "@/assets/module-4-governance.jpg";
-import accentImg from "@/assets/module-2-products.jpg";
+import collage1 from "@/assets/about-collage-1.jpg";
+import collage2 from "@/assets/about-collage-2.jpg";
+import collage3 from "@/assets/about-collage-3.jpg";
 
 const values = [
   { icon: Shield, title: "Integrity", desc: "Upholding the highest ethical standards in all our dealings." },
@@ -16,22 +17,57 @@ const AboutSection = () => {
       <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute bottom-0 -left-20 w-80 h-80 rounded-full bg-secondary/10 blur-3xl" />
       <div className="container mx-auto px-4 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+          {/* Image collage */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative h-[480px] sm:h-[560px]"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border">
-              <img src={aboutImg} alt="Islamic finance governance" className="w-full h-[420px] object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 via-transparent to-secondary/20" />
+            {/* Main image */}
+            <div className="absolute top-0 left-0 w-[72%] h-[68%] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border">
+              <img
+                src={collage1}
+                alt="Architecture moderne d'institution financière islamique"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent" />
             </div>
-            <div className="absolute -bottom-6 -right-6 w-40 h-40 rounded-2xl overflow-hidden shadow-xl ring-4 ring-card hidden md:block">
-              <img src={accentImg} alt="" className="w-full h-full object-cover" />
+
+            {/* Bottom-right image */}
+            <div className="absolute bottom-0 right-0 w-[62%] h-[52%] rounded-2xl overflow-hidden shadow-2xl ring-4 ring-card">
+              <img
+                src={collage2}
+                alt="Équipe d'experts en finance islamique en réunion"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tl from-secondary/25 via-transparent to-transparent" />
             </div>
-            <div className="absolute -top-4 -left-4 w-24 h-24 rounded-full bg-gradient-to-br from-secondary to-primary opacity-90 -z-0" />
+
+            {/* Top-right small card */}
+            <div className="absolute top-[8%] right-0 w-[36%] h-[32%] rounded-xl overflow-hidden shadow-xl ring-4 ring-card hidden sm:block">
+              <img
+                src={collage3}
+                alt="Signature d'un contrat de finance islamique"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Decorative shapes */}
+            <div className="absolute -top-4 -left-4 w-20 h-20 rounded-full bg-gradient-to-br from-secondary to-primary opacity-90 -z-10" />
+            <div className="absolute -bottom-6 left-[30%] w-32 h-32 rounded-2xl bg-gradient-to-tr from-primary/15 to-secondary/15 backdrop-blur-sm border border-border -z-10" />
+
+            {/* Stats badge */}
+            <div className="absolute bottom-4 left-4 bg-card/95 backdrop-blur-md rounded-xl px-4 py-3 shadow-xl border border-border">
+              <p className="text-2xl font-heading font-bold text-primary">100%</p>
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Charia Compliant</p>
+            </div>
           </motion.div>
+
 
           <div>
             <span className="inline-block px-3 py-1 rounded-full bg-gold-light text-secondary text-xs font-medium mb-3">

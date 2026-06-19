@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import usfurLogo from "@/assets/usfur-logo.jpg";
 
 const navLinks = [
-  { label: "Accueil", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Formation", href: "#training" },
-  { label: "Modules", href: "#modules" },
-  { label: "À Propos", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Accueil", href: "/#home" },
+  { label: "Services", href: "/services" },
+  { label: "Formation", href: "/#training" },
+  { label: "Modules", href: "/#modules" },
+  { label: "À Propos", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const Navbar = () => {
