@@ -11,6 +11,7 @@ const navLinks = [
   { label: "Formation", href: "/#training" },
   { label: "Modules", href: "/#modules" },
   { label: "Partenaires", href: "/partners" },
+  { label: "Galerie", href: "/#gallery" },
   { label: "À Propos", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ];

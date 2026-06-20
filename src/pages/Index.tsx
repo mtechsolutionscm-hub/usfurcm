@@ -9,6 +9,7 @@ import CEMACSection from "@/components/CEMACSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import AboutSection from "@/components/AboutSection";
+import PhotoGallery from "@/components/PhotoGallery";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -35,6 +36,7 @@ const Index = () => {
       <TestimonialsSection />
       <FAQSection />
       <AboutSection />
+      <PhotoGallery />
       <ContactSection />
       <Footer />
     </div>
