@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import PartnershipDialog from "@/components/PartnershipDialog";
 
 import bis from "@/assets/partners/bis.png.asset.json";
 import iebc from "@/assets/partners/iebc.jpg.asset.json";
