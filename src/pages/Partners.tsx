@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import PartnershipDialog from "@/components/PartnershipDialog";
 
 import bis from "@/assets/partners/bis.png.asset.json";
 import iebc from "@/assets/partners/iebc.jpg.asset.json";
@@ -118,15 +119,24 @@ const Partners = () => {
               Rejoignez notre réseau d'institutions engagées pour le développement de la
               finance islamique éthique et conforme à la Charia.
             </p>
-            <Button size="lg" asChild>
-              <a
-                href="https://wa.me/237690895554?text=Bonjour%20USFUR%2C%20nous%20souhaitons%20devenir%20partenaire."
-                target="_blank"
-                rel="noopener"
-              >
-                Discuter d'un Partenariat
-              </a>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <PartnershipDialog
+                trigger={
+                  <Button size="lg" className="gap-2">
+                    <Handshake className="w-4 h-4" /> Formulaire de partenariat
+                  </Button>
+                }
+              />
+              <Button size="lg" variant="outline" asChild>
+                <a
+                  href="https://wa.me/237690895554?text=Bonjour%20USFUR%2C%20nous%20souhaitons%20devenir%20partenaire."
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Discuter sur WhatsApp
+                </a>
+              </Button>
+            </div>
           </section>
         </div>
       </main>

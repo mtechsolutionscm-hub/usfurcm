@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ctaBg from "@/assets/cta-services-bg.jpg";
+import ctaBg from "@/assets/african-muslim-training.jpg";
 
 const WHATSAPP =
   "https://wa.me/237690895554?text=" +
