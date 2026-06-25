@@ -10,6 +10,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import AboutSection from "@/components/AboutSection";
 import PhotoGallery from "@/components/PhotoGallery";
+import ProfessionalCarousel from "@/components/ProfessionalCarousel";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -28,6 +29,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
       <HeroSection />
+      <ProfessionalCarousel />
       <ServicesSection />
       <ServicesCTA />
       <TrainingSection />

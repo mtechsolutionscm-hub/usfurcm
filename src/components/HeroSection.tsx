@@ -2,8 +2,10 @@ import { MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
+  const { t } = useLanguage();
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image */}
@@ -23,7 +25,7 @@ const HeroSection = () => {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-light text-secondary text-sm font-medium mb-6">
             <span className="w-2 h-2 rounded-full bg-secondary" />
-            Essential for Success
+            {t("hero.badge")}
           </span>
         </motion.div>
 
@@ -42,7 +44,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Training <span className="text-gradient-gold">&</span> Consulting
+          {t("hero.title2").split("&")[0]}<span className="text-gradient-gold">&</span>{t("hero.title2").split("&")[1]}
         </motion.h2>
 
         <motion.p
@@ -51,7 +53,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          Expert consulting and professional training in Sharia-compliant finance for banks, microfinances, and SMEs.
+          {t("hero.desc")}
         </motion.p>
 
         <motion.div
@@ -67,12 +69,12 @@ const HeroSection = () => {
               rel="noopener"
             >
               <MessageSquare className="w-4 h-4" />
-              Book Consultation
+              {t("hero.cta.book")}
               <ArrowRight className="w-4 h-4" />
             </a>
           </Button>
           <Button variant="outline" size="lg" className="px-8 text-base" asChild>
-            <a href="#training">View Programs</a>
+            <a href="#training">{t("hero.cta.programs")}</a>
           </Button>
         </motion.div>
       </div>
