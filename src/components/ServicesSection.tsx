@@ -117,9 +117,9 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
         className="mt-auto flex items-center gap-1 text-xs font-medium text-primary hover:underline self-start"
       >
         {expanded ? (
-          <>Voir moins <ChevronUp className="w-3 h-3" /></>
+          <>{t("services.less")} <ChevronUp className="w-3 h-3" /></>
         ) : (
-          <>Voir plus <ChevronDown className="w-3 h-3" /></>
+          <>{t("services.more")} <ChevronDown className="w-3 h-3" /></>
         )}
       </button>
     </motion.div>
