@@ -87,24 +87,24 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
 
   return (
     <motion.div
-      className="p-6 rounded-xl border border-border bg-background hover:shadow-lg hover:border-primary/20 transition-all duration-300 group"
+      className="p-5 sm:p-6 rounded-xl border border-border bg-background hover:shadow-lg hover:border-primary/20 transition-all duration-300 group min-w-0 flex flex-col overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: i * 0.08 }}
     >
-      <div className="w-12 h-12 rounded-lg bg-green-light flex items-center justify-center mb-4 group-hover:bg-primary transition-colors">
+      <div className="w-12 h-12 rounded-lg bg-green-light flex items-center justify-center mb-4 group-hover:bg-primary transition-colors flex-shrink-0">
         <s.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
       </div>
-      <h3 className="font-heading font-semibold text-lg mb-2 text-foreground">{s.title}</h3>
-      <p className="text-muted-foreground text-sm leading-relaxed mb-3">{s.description}</p>
+      <h3 className="font-heading font-semibold text-base sm:text-lg mb-2 text-foreground break-words hyphens-auto">{s.title}</h3>
+      <p className="text-muted-foreground text-sm leading-relaxed mb-3 break-words">{s.description}</p>
 
       {expanded && (
         <ul className="space-y-2 mb-3">
           {s.details.map((d) => (
-            <li key={d} className="text-xs text-muted-foreground flex items-start gap-2">
+            <li key={d} className="text-xs text-muted-foreground flex items-start gap-2 break-words">
               <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-              {d}
+              <span className="min-w-0 flex-1 break-words">{d}</span>
             </li>
           ))}
         </ul>
@@ -112,7 +112,7 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
 
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+        className="mt-auto flex items-center gap-1 text-xs font-medium text-primary hover:underline self-start"
       >
         {expanded ? (
           <>Voir moins <ChevronUp className="w-3 h-3" /></>
