@@ -37,6 +37,30 @@ const dict: Dict = {
     FR: "Découvrez nos experts, conseillers et partenaires œuvrant chaque jour pour une finance éthique et conforme à la Charia.",
     EN: "Meet the experts, advisors and partners shaping ethical, Sharia-compliant finance every day.",
   },
+
+  // Services section
+  "services.eyebrow": { FR: "Nos Services", EN: "Our Services" },
+  "services.title": { FR: "Solutions Complètes en Finance Islamique", EN: "Complete Solutions in Islamic Finance" },
+  "services.more": { FR: "Voir plus", EN: "Show more" },
+  "services.less": { FR: "Voir moins", EN: "Show less" },
+
+  // Modules section
+  "modules.badge": { FR: "Conforme AAOIFI", EN: "AAOIFI Compliant" },
+  "modules.title": { FR: "Modules de Formation en Finance Islamique", EN: "Islamic Finance Training Modules" },
+  "modules.subtitle": {
+    FR: "Programme complet suivant les normes internationales AAOIFI",
+    EN: "Comprehensive program aligned with AAOIFI international standards",
+  },
+  "modules.carousel.eyebrow": { FR: "Aperçu du Programme", EN: "Program Preview" },
+  "modules.carousel.title": { FR: "Plongez au cœur de nos modules", EN: "Dive into our modules" },
+  "modules.admission": { FR: "Frais d'admission", EN: "Admission fee" },
+  "modules.course": { FR: "Frais de cours", EN: "Course fee" },
+  "modules.target": { FR: "Public Cible", EN: "Target Audience" },
+  "modules.deliverables": { FR: "Livrables de Formation", EN: "Training Deliverables" },
+  "modules.objectives": { FR: "Objectifs d'apprentissage :", EN: "Learning objectives:" },
+  "modules.fees": { FR: "Frais :", EN: "Fee:" },
+  "modules.details": { FR: "Détails", EN: "Details" },
+  "modules.enroll": { FR: "S'inscrire au Programme", EN: "Enroll in the Program" },
 };
 
 interface Ctx {

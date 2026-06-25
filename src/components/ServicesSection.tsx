@@ -1,6 +1,7 @@
 import { Compass, ClipboardCheck, Building2, TrendingUp, Scale, GraduationCap, Globe, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const services = [
   {
@@ -84,6 +85,7 @@ const services = [
 
 const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <motion.div
@@ -115,9 +117,9 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
         className="mt-auto flex items-center gap-1 text-xs font-medium text-primary hover:underline self-start"
       >
         {expanded ? (
-          <>Voir moins <ChevronUp className="w-3 h-3" /></>
+          <>{t("services.less")} <ChevronUp className="w-3 h-3" /></>
         ) : (
-          <>Voir plus <ChevronDown className="w-3 h-3" /></>
+          <>{t("services.more")} <ChevronDown className="w-3 h-3" /></>
         )}
       </button>
     </motion.div>
@@ -125,6 +127,7 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
 };
 
 const ServicesSection = () => {
+  const { t } = useLanguage();
   return (
     <section id="services" className="relative py-24 bg-card overflow-hidden">
       <div
@@ -136,9 +139,9 @@ const ServicesSection = () => {
       <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl" />
       <div className="container mx-auto px-4 relative">
         <div className="text-center mb-16">
-          <h3 className="text-primary font-medium text-sm tracking-wider uppercase mb-2">Nos Services</h3>
+          <h3 className="text-primary font-medium text-sm tracking-wider uppercase mb-2">{t("services.eyebrow")}</h3>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
-            Solutions Complètes en Finance Islamique
+            {t("services.title")}
           </h2>
         </div>
 
