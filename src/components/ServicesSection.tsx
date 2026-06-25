@@ -127,6 +127,7 @@ const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
 };
 
 const ServicesSection = () => {
+  const { t } = useLanguage();
   return (
     <section id="services" className="relative py-24 bg-card overflow-hidden">
       <div
@@ -138,9 +139,9 @@ const ServicesSection = () => {
       <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl" />
       <div className="container mx-auto px-4 relative">
         <div className="text-center mb-16">
-          <h3 className="text-primary font-medium text-sm tracking-wider uppercase mb-2">Nos Services</h3>
+          <h3 className="text-primary font-medium text-sm tracking-wider uppercase mb-2">{t("services.eyebrow")}</h3>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
-            Solutions Complètes en Finance Islamique
+            {t("services.title")}
           </h2>
         </div>
 
