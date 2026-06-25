@@ -85,6 +85,7 @@ const services = [
 
 const ServiceCard = ({ s, i }: { s: typeof services[0]; i: number }) => {
   const [expanded, setExpanded] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <motion.div
