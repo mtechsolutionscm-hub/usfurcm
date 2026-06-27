@@ -14,7 +14,8 @@ import {
   LayoutDashboard, BookOpen, Users, Radio, LogOut, Plus, Trash2, Play, Square, Settings, FileQuestion, Pencil, Calendar, Clock, Eye, FileText, DollarSign, TrendingUp, Download, Sheet, Bell, Award, ClipboardCheck, BarChart3, MessageSquare, Search, Filter, Building2, Home
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import usfurLogo from "@/assets/usfur-logo.jpg";
+import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
+const usfurLogo = usfurLogoAsset.url;
 import NotificationBell from "@/components/NotificationBell";
 import QuizManager from "@/components/QuizManager";
 import LiveRoom from "@/components/LiveRoom";

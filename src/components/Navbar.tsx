@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import usfurLogo from "@/assets/usfur-logo.jpg";
+import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
+const usfurLogo = usfurLogoAsset.url;
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

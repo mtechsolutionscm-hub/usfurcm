@@ -1,4 +1,5 @@
-import usfurLogo from "@/assets/usfur-logo.jpg";
+import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
+const usfurLogo = usfurLogoAsset.url;
 
 const Footer = () => {
   return (
