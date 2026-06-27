@@ -14,6 +14,32 @@ import commercialbank from "@/assets/partners/commercialbank.png.asset.json";
 import cbcbank from "@/assets/partners/cbcbank.jpg.asset.json";
 import bfi from "@/assets/partners/bfi.png.asset.json";
 import ccabank from "@/assets/partners/ccabank.jpg.asset.json";
+import sentakaful from "@/assets/partners/sentakaful.png.asset.json";
+import askiatakaful from "@/assets/partners/askiatakaful.png.asset.json";
+
+import fieldBIS1 from "@/assets/field/JJAC8844.jpg.asset.json";
+import fieldBIS2 from "@/assets/field/OGPX7041.jpg.asset.json";
+import fieldBIS3 from "@/assets/field/SAXH8257.jpg.asset.json";
+import fieldBIS4 from "@/assets/field/IJGG5746.jpg.asset.json";
+import fieldISDB from "@/assets/field/MCNP4527.jpg.asset.json";
+import fieldSenTak from "@/assets/field/GTRR1012.jpg.asset.json";
+import fieldDelegation from "@/assets/field/GTMA0436.jpg.asset.json";
+import fieldLounge from "@/assets/field/SMJT2967.jpg.asset.json";
+import fieldTeam1 from "@/assets/field/HEDD9472.jpg.asset.json";
+import fieldTeam2 from "@/assets/field/TCMU0097.jpg.asset.json";
+
+const fieldPhotos = [
+  { src: fieldBIS1.url, caption: "Rencontre stratégique à la Banque Islamique du Sénégal (40 ans)" },
+  { src: fieldSenTak.url, caption: "Séance de travail avec le Charia Board de SEN TAKAFUL" },
+  { src: fieldBIS2.url, caption: "Délégation USFUR à la Banque Islamique du Sénégal" },
+  { src: fieldISDB.url, caption: "Visite à la Islamic Development Bank (ISDB)" },
+  { src: fieldBIS3.url, caption: "Échanges avec les dirigeants de la BIS" },
+  { src: fieldBIS4.url, caption: "Réunion de partenariat institutionnel" },
+  { src: fieldDelegation.url, caption: "Délégation d'experts en finance islamique" },
+  { src: fieldLounge.url, caption: "Concertation entre experts" },
+  { src: fieldTeam1.url, caption: "Équipe CCU — partenaire opérationnel" },
+  { src: fieldTeam2.url, caption: "Formations et collaborations terrain" },
+];
 
 type Partner = {
   name: string;
@@ -33,7 +59,9 @@ const nationalPartners: Partner[] = [
 ];
 
 const internationalPartners: Partner[] = [
-  { name: "Banque Islamique du Sénégal", logo: bis.url, country: "Sénégal", category: "Banque Islamique" },
+  { name: "Banque Islamique du Sénégal (BIS)", logo: bis.url, country: "Sénégal", category: "Banque Islamique" },
+  { name: "SEN TAKAFUL", logo: sentakaful.url, country: "Sénégal", category: "Assurance Takaful" },
+  { name: "ASKIA TAKAFUL", logo: askiatakaful.url, country: "Sénégal", category: "Assurance Takaful" },
   { name: "Savana Islamic Finance", logo: savana.url, country: "International", category: "Finance Islamique" },
   { name: "IEBC - International Economics & Business Corp.", logo: iebc.url, country: "International", category: "Conseil Économique" },
 ];
@@ -111,6 +139,43 @@ const Partners = () => {
               {internationalPartners.map((p) => <PartnerCard key={p.name} p={p} />)}
             </div>
           </section>
+
+          {/* Field photos — visits & meetings */}
+          <section className="mb-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Handshake className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold">Visites & Rencontres Institutionnelles</h2>
+                <p className="text-sm text-muted-foreground">
+                  Moments de collaboration avec nos partenaires sur le terrain
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {fieldPhotos.map((photo, i) => (
+                <figure
+                  key={i}
+                  className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={photo.src}
+                      alt={photo.caption}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90" />
+                  <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-white text-xs md:text-sm font-medium">
+                    {photo.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+
 
           {/* CTA */}
           <section className="bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10 border border-border rounded-2xl p-8 md:p-12 text-center">
