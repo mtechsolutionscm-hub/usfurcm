@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { BookOpen, Shield, Award } from "lucide-react";
-import usfurLogo from "@/assets/usfur-logo.jpg";
+import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
+const usfurLogo = usfurLogoAsset.url;
 import authBg from "@/assets/auth-bg.jpg";
 
 const Auth = () => {

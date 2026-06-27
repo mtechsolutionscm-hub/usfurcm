@@ -18,7 +18,8 @@ import {
   MessageCircle, FileText, Download, Building2, Send, Briefcase, Package, Home
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import usfurLogo from "@/assets/usfur-logo.jpg";
+import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
+const usfurLogo = usfurLogoAsset.url;
 import NotificationBell from "@/components/NotificationBell";
 import QuizTaker from "@/components/QuizTaker";
 import LiveRoom from "@/components/LiveRoom";
