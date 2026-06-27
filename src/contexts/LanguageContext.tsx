@@ -61,6 +61,54 @@ const dict: Dict = {
   "modules.fees": { FR: "Frais :", EN: "Fee:" },
   "modules.details": { FR: "Détails", EN: "Details" },
   "modules.enroll": { FR: "S'inscrire au Programme", EN: "Enroll in the Program" },
+
+  // Partners — Visites & Rencontres section
+  "visits.title": { FR: "Visites & Rencontres Institutionnelles", EN: "Institutional Visits & Meetings" },
+  "visits.subtitle": {
+    FR: "Moments de collaboration avec nos partenaires sur le terrain",
+    EN: "Moments of collaboration with our partners in the field",
+  },
+  "visits.appointment": { FR: "Prendre rendez-vous", EN: "Book an appointment" },
+  "visits.cap.bis1": {
+    FR: "Rencontre stratégique au siège de la Banque Islamique du Sénégal — 40 ans d'expertise en finance islamique",
+    EN: "Strategic meeting at the headquarters of Banque Islamique du Sénégal — 40 years of Islamic finance expertise",
+  },
+  "visits.cap.sentak": {
+    FR: "Séance de travail avec le Charia Board de SEN TAKAFUL — validation des produits d'assurance conformes",
+    EN: "Working session with the SEN TAKAFUL Sharia Board — validation of compliant insurance products",
+  },
+  "visits.cap.bis2": {
+    FR: "Délégation USFUR reçue par la direction générale de la Banque Islamique du Sénégal",
+    EN: "USFUR delegation hosted by the executive management of Banque Islamique du Sénégal",
+  },
+  "visits.cap.isdb": {
+    FR: "Visite institutionnelle à l'Islamic Development Bank (ISDB) — partenariat de développement",
+    EN: "Institutional visit to the Islamic Development Bank (ISDB) — development partnership",
+  },
+  "visits.cap.bis3": {
+    FR: "Échanges techniques avec les cadres dirigeants de la BIS sur l'ingénierie financière islamique",
+    EN: "Technical exchanges with BIS senior executives on Islamic financial engineering",
+  },
+  "visits.cap.bis4": {
+    FR: "Signature d'un accord-cadre de coopération institutionnelle",
+    EN: "Signing of an institutional cooperation framework agreement",
+  },
+  "visits.cap.delegation": {
+    FR: "Délégation d'experts USFUR en mission internationale de benchmarking",
+    EN: "USFUR expert delegation on an international benchmarking mission",
+  },
+  "visits.cap.lounge": {
+    FR: "Concertation stratégique entre experts en finance islamique africaine",
+    EN: "Strategic discussion between African Islamic finance experts",
+  },
+  "visits.cap.team1": {
+    FR: "Rencontre avec l'équipe CCU — partenaire opérationnel de formation continue",
+    EN: "Meeting with the CCU team — operational partner for continuing education",
+  },
+  "visits.cap.team2": {
+    FR: "Sessions de formation et collaborations terrain avec les institutions partenaires",
+    EN: "Training sessions and field collaborations with partner institutions",
+  },
 };
 
 interface Ctx {

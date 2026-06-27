@@ -1,11 +1,11 @@
-import { ArrowLeft, Globe2, MapPin, Handshake } from "lucide-react";
+import { ArrowLeft, Globe2, MapPin, Handshake, CalendarCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import PartnershipDialog from "@/components/PartnershipDialog";
 import AppointmentDialog from "@/components/AppointmentDialog";
-import { CalendarCheck } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import bis from "@/assets/partners/bis.png.asset.json";
 import iebc from "@/assets/partners/iebc.jpg.asset.json";
@@ -31,16 +31,16 @@ import fieldTeam1 from "@/assets/field/HEDD9472.jpg.asset.json";
 import fieldTeam2 from "@/assets/field/TCMU0097.jpg.asset.json";
 
 const fieldPhotos = [
-  { src: fieldBIS1.url, caption: "Rencontre stratégique au siège de la Banque Islamique du Sénégal — 40 ans d'expertise en finance islamique" },
-  { src: fieldSenTak.url, caption: "Séance de travail avec le Charia Board de SEN TAKAFUL — validation des produits d'assurance conformes" },
-  { src: fieldBIS2.url, caption: "Délégation USFUR reçue par la direction générale de la Banque Islamique du Sénégal" },
-  { src: fieldISDB.url, caption: "Visite institutionnelle à l'Islamic Development Bank (ISDB) — partenariat de développement" },
-  { src: fieldBIS3.url, caption: "Échanges techniques avec les cadres dirigeants de la BIS sur l'ingénierie financière islamique" },
-  { src: fieldBIS4.url, caption: "Signature d'un accord-cadre de coopération institutionnelle" },
-  { src: fieldDelegation.url, caption: "Délégation d'experts USFUR en mission internationale de benchmarking" },
-  { src: fieldLounge.url, caption: "Concertation stratégique entre experts en finance islamique africaine" },
-  { src: fieldTeam1.url, caption: "Rencontre avec l'équipe CCU — partenaire opérationnel de formation continue" },
-  { src: fieldTeam2.url, caption: "Sessions de formation et collaborations terrain avec les institutions partenaires" },
+  { src: fieldBIS1.url, key: "visits.cap.bis1" },
+  { src: fieldSenTak.url, key: "visits.cap.sentak" },
+  { src: fieldBIS2.url, key: "visits.cap.bis2" },
+  { src: fieldISDB.url, key: "visits.cap.isdb" },
+  { src: fieldBIS3.url, key: "visits.cap.bis3" },
+  { src: fieldBIS4.url, key: "visits.cap.bis4" },
+  { src: fieldDelegation.url, key: "visits.cap.delegation" },
+  { src: fieldLounge.url, key: "visits.cap.lounge" },
+  { src: fieldTeam1.url, key: "visits.cap.team1" },
+  { src: fieldTeam2.url, key: "visits.cap.team2" },
 ];
 
 type Partner = {
@@ -87,6 +87,7 @@ const PartnerCard = ({ p }: { p: Partner }) => (
 );
 
 const Partners = () => {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
@@ -150,40 +151,41 @@ const Partners = () => {
                   <Handshake className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">Visites & Rencontres Institutionnelles</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Moments de collaboration avec nos partenaires sur le terrain
-                  </p>
+                  <h2 className="text-2xl font-bold">{t("visits.title")}</h2>
+                  <p className="text-sm text-muted-foreground">{t("visits.subtitle")}</p>
                 </div>
               </div>
               <AppointmentDialog
                 trigger={
                   <Button size="lg" className="gap-2 shrink-0">
-                    <CalendarCheck className="w-4 h-4" /> Prendre rendez-vous
+                    <CalendarCheck className="w-4 h-4" /> {t("visits.appointment")}
                   </Button>
                 }
               />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {fieldPhotos.map((photo, i) => (
-                <figure
-                  key={i}
-                  className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all"
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={photo.src}
-                      alt={photo.caption}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90" />
-                  <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-white text-xs md:text-sm font-medium">
-                    {photo.caption}
-                  </figcaption>
-                </figure>
-              ))}
+              {fieldPhotos.map((photo, i) => {
+                const caption = t(photo.key);
+                return (
+                  <figure
+                    key={i}
+                    className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all"
+                  >
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={photo.src}
+                        alt={caption}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90" />
+                    <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-white text-xs md:text-sm font-medium">
+                      {caption}
+                    </figcaption>
+                  </figure>
+                );
+              })}
             </div>
           </section>
 
