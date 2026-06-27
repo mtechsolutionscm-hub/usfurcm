@@ -87,6 +87,7 @@ const PartnerCard = ({ p }: { p: Partner }) => (
 );
 
 const Partners = () => {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
@@ -150,40 +151,41 @@ const Partners = () => {
                   <Handshake className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">Visites & Rencontres Institutionnelles</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Moments de collaboration avec nos partenaires sur le terrain
-                  </p>
+                  <h2 className="text-2xl font-bold">{t("visits.title")}</h2>
+                  <p className="text-sm text-muted-foreground">{t("visits.subtitle")}</p>
                 </div>
               </div>
               <AppointmentDialog
                 trigger={
                   <Button size="lg" className="gap-2 shrink-0">
-                    <CalendarCheck className="w-4 h-4" /> Prendre rendez-vous
+                    <CalendarCheck className="w-4 h-4" /> {t("visits.appointment")}
                   </Button>
                 }
               />
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {fieldPhotos.map((photo, i) => (
-                <figure
-                  key={i}
-                  className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all"
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={photo.src}
-                      alt={photo.caption}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90" />
-                  <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-white text-xs md:text-sm font-medium">
-                    {photo.caption}
-                  </figcaption>
-                </figure>
-              ))}
+              {fieldPhotos.map((photo, i) => {
+                const caption = t(photo.key);
+                return (
+                  <figure
+                    key={i}
+                    className="group relative overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-xl transition-all"
+                  >
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={photo.src}
+                        alt={caption}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90" />
+                    <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-white text-xs md:text-sm font-medium">
+                      {caption}
+                    </figcaption>
+                  </figure>
+                );
+              })}
             </div>
           </section>
 
