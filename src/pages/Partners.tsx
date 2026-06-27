@@ -59,7 +59,9 @@ const nationalPartners: Partner[] = [
 ];
 
 const internationalPartners: Partner[] = [
-  { name: "Banque Islamique du Sénégal", logo: bis.url, country: "Sénégal", category: "Banque Islamique" },
+  { name: "Banque Islamique du Sénégal (BIS)", logo: bis.url, country: "Sénégal", category: "Banque Islamique" },
+  { name: "SEN TAKAFUL", logo: sentakaful.url, country: "Sénégal", category: "Assurance Takaful" },
+  { name: "ASKIA TAKAFUL", logo: askiatakaful.url, country: "Sénégal", category: "Assurance Takaful" },
   { name: "Savana Islamic Finance", logo: savana.url, country: "International", category: "Finance Islamique" },
   { name: "IEBC - International Economics & Business Corp.", logo: iebc.url, country: "International", category: "Conseil Économique" },
 ];
