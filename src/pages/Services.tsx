@@ -9,7 +9,8 @@ import {
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import heroBg from "@/assets/services-hero.jpg";
+import heroBgAsset from "@/assets/real/usfur-banner.jpg.asset.json";
+const heroBg = heroBgAsset.url;
 
 const WHATSAPP_NUMBER = "237690895554";
 const waLink = (msg: string) =>
