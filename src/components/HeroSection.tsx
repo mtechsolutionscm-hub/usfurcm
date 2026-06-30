@@ -1,7 +1,8 @@
 import { MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBgAsset from "@/assets/real/usfur-banner.jpg.asset.json";
+const heroBg = heroBgAsset.url;
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {

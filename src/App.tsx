@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Services from "./pages/Services";
 import Partners from "./pages/Partners";
+import Cours from "./pages/Cours";
 import AdminDashboard from "./pages/AdminDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/services" element={<Services />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/cours" element={<Cours />} />
             <Route
               path="/admin"
               element={
