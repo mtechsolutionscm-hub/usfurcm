@@ -9,7 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import { BookOpen, Shield, Award } from "lucide-react";
 import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
 const usfurLogo = usfurLogoAsset.url;
-import authBg from "@/assets/auth-bg.jpg";
+import authBgAsset from "@/assets/real/usfur-classic.jpg.asset.json";
+const authBg = authBgAsset.url;
 
 const Auth = () => {
   const [searchParams] = useSearchParams();
