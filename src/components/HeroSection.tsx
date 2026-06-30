@@ -1,20 +1,49 @@
+import { useEffect, useState } from "react";
 import { MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import heroBgAsset from "@/assets/real/usfur-banner.jpg.asset.json";
-const heroBg = heroBgAsset.url;
+import { motion, AnimatePresence } from "framer-motion";
+import banner from "@/assets/real/usfur-banner.jpg.asset.json";
+import classic from "@/assets/real/usfur-classic.jpg.asset.json";
+import cmr1 from "@/assets/real/meet-cmr-1.jpg.asset.json";
+import cmr2 from "@/assets/real/meet-cmr-2.jpg.asset.json";
+import f1 from "@/assets/field/GTRR1012.jpg.asset.json";
+import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
+import f3 from "@/assets/field/GTMA0436.jpg.asset.json";
+import f4 from "@/assets/field/SMJT2967.jpg.asset.json";
+import f5 from "@/assets/field/HEDD9472.jpg.asset.json";
+import f6 from "@/assets/field/JJAC8844.jpg.asset.json";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+const slides = [banner.url, f1.url, f2.url, cmr1.url, f3.url, classic.url, f4.url, cmr2.url, f5.url, f6.url];
 
 const HeroSection = () => {
   const { t } = useLanguage();
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image */}
+      {/* Background carousel */}
       <div className="absolute inset-0">
-        <img src={heroBg} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/55 to-background/80" />
+        <AnimatePresence mode="sync">
+          <motion.img
+            key={index}
+            src={slides[index]}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0, scale: 1.08 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1.4 }, scale: { duration: 6, ease: "linear" } }}
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background/85" />
       </div>
-      {/* Decorative circles */}
+
       <div className="absolute -left-32 top-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-32 bottom-1/4 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
 
@@ -31,7 +60,7 @@ const HeroSection = () => {
         </motion.div>
 
         <motion.h1
-          className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground"
+          className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground drop-shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
@@ -45,11 +74,13 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {t("hero.title2").split("&")[0]}<span className="text-gradient-gold">&</span>{t("hero.title2").split("&")[1]}
+          {t("hero.title2").split("&")[0]}
+          <span className="text-gradient-gold">&</span>
+          {t("hero.title2").split("&")[1]}
         </motion.h2>
 
         <motion.p
-          className="text-muted-foreground max-w-xl mx-auto text-base sm:text-lg mb-10"
+          className="text-foreground/85 max-w-xl mx-auto text-base sm:text-lg mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -78,6 +109,20 @@ const HeroSection = () => {
             <a href="#training">{t("hero.cta.programs")}</a>
           </Button>
         </motion.div>
+
+        {/* Slide indicators */}
+        <div className="flex justify-center gap-2 mt-12">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`Slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index ? "w-8 bg-primary" : "w-2 bg-primary/30 hover:bg-primary/50"
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
