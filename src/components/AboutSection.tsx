@@ -1,8 +1,11 @@
 import { Shield, Star, Heart, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
-import collage1 from "@/assets/about-collage-1.jpg";
-import collage2 from "@/assets/african-muslim-pros.jpg";
-import collage3 from "@/assets/african-muslim-woman.jpg";
+import collage1Asset from "@/assets/field/JJAC8844.jpg.asset.json";
+import collage2Asset from "@/assets/field/HEDD9472.jpg.asset.json";
+import collage3Asset from "@/assets/field/OGPX7041.jpg.asset.json";
+const collage1 = collage1Asset.url;
+const collage2 = collage2Asset.url;
+const collage3 = collage3Asset.url;
 
 const values = [
   { icon: Shield, title: "Integrity", desc: "Upholding the highest ethical standards in all our dealings." },

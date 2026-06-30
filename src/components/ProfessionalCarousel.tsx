@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-import proBoardroom from "@/assets/gallery/pro-boardroom.jpg";
-import proPresentation from "@/assets/gallery/pro-presentation.jpg";
-import proHandshake from "@/assets/gallery/pro-handshake.jpg";
-import proAnalyst from "@/assets/gallery/pro-analyst.jpg";
-import proTeam from "@/assets/gallery/pro-team.jpg";
-import proAdvisor from "@/assets/gallery/pro-advisor.jpg";
+import a1 from "@/assets/field/JJAC8844.jpg.asset.json";
+import a2 from "@/assets/field/OGPX7041.jpg.asset.json";
+import a3 from "@/assets/field/SAXH8257.jpg.asset.json";
+import a4 from "@/assets/field/MCNP4527.jpg.asset.json";
+import a5 from "@/assets/field/HEDD9472.jpg.asset.json";
+import a6 from "@/assets/field/TCMU0097.jpg.asset.json";
 
 type Slide = {
   src: string;
@@ -19,51 +19,51 @@ type Slide = {
 
 const slides: Slide[] = [
   {
-    src: proBoardroom,
+    src: a1.url,
     title: { FR: "Direction Stratégique", EN: "Strategic Leadership" },
     caption: {
-      FR: "Pilotage de portefeuilles d'investissement conformes à la Charia depuis nos salles de direction.",
-      EN: "Steering Sharia-compliant investment portfolios from our executive boardrooms.",
+      FR: "Rencontre stratégique avec la Banque Islamique du Sénégal — 40 ans d'expertise.",
+      EN: "Strategic meeting with Banque Islamique du Sénégal — 40 years of expertise.",
     },
   },
   {
-    src: proPresentation,
-    title: { FR: "Stratégie Bancaire Islamique", EN: "Islamic Banking Strategy" },
-    caption: {
-      FR: "Nos consultantes accompagnent les institutions dans la croissance de leurs activités halal.",
-      EN: "Our consultants guide institutions in scaling their halal financial activities.",
-    },
-  },
-  {
-    src: proHandshake,
+    src: a2.url,
     title: { FR: "Partenariats Institutionnels", EN: "Institutional Partnerships" },
     caption: {
-      FR: "Bâtir des alliances solides avec banques, assurances et fonds éthiques.",
-      EN: "Forging strong alliances with banks, takaful operators and ethical funds.",
+      FR: "Signature d'accords entre institutions de finance islamique africaines.",
+      EN: "Signing agreements between African Islamic finance institutions.",
     },
   },
   {
-    src: proAnalyst,
-    title: { FR: "Analyse & Conformité", EN: "Analysis & Compliance" },
+    src: a3.url,
+    title: { FR: "Excellence Bancaire", EN: "Banking Excellence" },
     caption: {
-      FR: "Suivi en temps réel des indicateurs Murabaha, Sukuk et Ijara selon les standards AAOIFI.",
-      EN: "Real-time monitoring of Murabaha, Sukuk and Ijara indicators under AAOIFI standards.",
+      FR: "Échanges techniques au siège d'une banque islamique de référence.",
+      EN: "Technical exchanges at the headquarters of a leading Islamic bank.",
     },
   },
   {
-    src: proTeam,
-    title: { FR: "Équipes Expertes", EN: "Expert Teams" },
+    src: a4.url,
+    title: { FR: "Coopération Internationale", EN: "International Cooperation" },
     caption: {
-      FR: "Une équipe pluridisciplinaire au service de la finance éthique en Afrique centrale.",
-      EN: "A multidisciplinary team serving ethical finance across Central Africa.",
+      FR: "Mission auprès de la Banque Islamique de Développement (ISDB).",
+      EN: "Mission with the Islamic Development Bank (ISDB).",
     },
   },
   {
-    src: proAdvisor,
+    src: a5.url,
+    title: { FR: "Équipe Expert USFUR", EN: "USFUR Expert Team" },
+    caption: {
+      FR: "Notre équipe au service de la finance éthique en Afrique centrale.",
+      EN: "Our team serving ethical finance across Central Africa.",
+    },
+  },
+  {
+    src: a6.url,
     title: { FR: "Conseil Personnalisé", EN: "Personalised Advisory" },
     caption: {
-      FR: "Accompagnement sur-mesure des dirigeants pour structurer leurs financements islamiques.",
-      EN: "Bespoke guidance for leaders structuring their Islamic financing operations.",
+      FR: "Accompagnement sur-mesure des dirigeants et institutions.",
+      EN: "Bespoke guidance for leaders and institutions.",
     },
   },
 ];
@@ -129,8 +129,6 @@ export default function ProfessionalCarousel() {
                         src={slide.src}
                         alt={slide.title[lang]}
                         loading="lazy"
-                        width={1536}
-                        height={1024}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
