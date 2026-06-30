@@ -17,7 +17,7 @@ const Navbar = () => {
     { label: t("nav.home"), href: "/#home" },
     { label: t("nav.services"), href: "/services" },
     { label: t("nav.training"), href: "/#training" },
-    { label: t("nav.modules"), href: "/#modules" },
+    { label: t("nav.modules"), href: "/cours" },
     { label: t("nav.partners"), href: "/partners" },
     { label: t("nav.gallery"), href: "/#gallery" },
     { label: t("nav.about"), href: "/#about" },
