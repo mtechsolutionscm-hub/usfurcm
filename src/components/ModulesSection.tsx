@@ -5,13 +5,22 @@ import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-import module1 from "@/assets/module-1-sharia.jpg";
-import module2 from "@/assets/module-2-products.jpg";
-import module4 from "@/assets/module-4-governance.jpg";
-import module5 from "@/assets/module-5-money.jpg";
-import module6 from "@/assets/module-6-crisis.jpg";
-import module7 from "@/assets/module-7-takaful.jpg";
-import module8 from "@/assets/module-8-sukuk.jpg";
+import m1 from "@/assets/field/JJAC8844.jpg.asset.json";
+import m2 from "@/assets/field/OGPX7041.jpg.asset.json";
+import m3 from "@/assets/field/SAXH8257.jpg.asset.json";
+import m4 from "@/assets/field/IJGG5746.jpg.asset.json";
+import m5 from "@/assets/field/MCNP4527.jpg.asset.json";
+import m6 from "@/assets/field/HEDD9472.jpg.asset.json";
+import m7 from "@/assets/field/TCMU0097.jpg.asset.json";
+import m8 from "@/assets/field/SMJT2967.jpg.asset.json";
+const module1 = m1.url;
+const module2 = m2.url;
+const module4 = m4.url;
+const module5 = m5.url;
+const module6 = m6.url;
+const module7 = m7.url;
+const module8 = m8.url;
+const module3img = m3.url;
 
 const modules = [
   { num: 1, title: "Fondements de la Charia", duration: "4 semaines", image: module1, objectives: ["Sources de la jurisprudence islamique", "Histoire de la jurisprudence", "Maqaasid Charia et règles jurisprudentielles majeures", "Jurisprudence des transactions", "Principales interdictions et sagesse de l'interdiction"] },
