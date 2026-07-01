@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Services from "./pages/Services";
 import Partners from "./pages/Partners";
 import Cours from "./pages/Cours";
+import FormationDetail from "./pages/FormationDetail";
 import AdminDashboard from "./pages/AdminDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/services" element={<Services />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/cours" element={<Cours />} />
+            <Route path="/formations/:slug" element={<FormationDetail />} />
             <Route
               path="/admin"
               element={
