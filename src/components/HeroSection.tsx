@@ -3,18 +3,13 @@ import { MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import banner from "@/assets/real/usfur-banner.jpg.asset.json";
-import classic from "@/assets/real/usfur-classic.jpg.asset.json";
+import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
 import cmr1 from "@/assets/real/meet-cmr-1.jpg.asset.json";
 import cmr2 from "@/assets/real/meet-cmr-2.jpg.asset.json";
-import f1 from "@/assets/field/GTRR1012.jpg.asset.json";
-import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
-import f3 from "@/assets/field/GTMA0436.jpg.asset.json";
-import f4 from "@/assets/field/SMJT2967.jpg.asset.json";
-import f5 from "@/assets/field/HEDD9472.jpg.asset.json";
 import f6 from "@/assets/field/JJAC8844.jpg.asset.json";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const slides = [banner.url, f1.url, f2.url, cmr1.url, f3.url, classic.url, f4.url, cmr2.url, f5.url, f6.url];
+const slides = [banner.url, f2.url, cmr1.url, cmr2.url, f6.url];
 
 const HeroSection = () => {
   const { t } = useLanguage();
