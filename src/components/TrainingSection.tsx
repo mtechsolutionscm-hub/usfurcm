@@ -38,7 +38,7 @@ const TrainingSection = () => {
                 </li>
               ))}
             </ul>
-            <Button className="w-full" asChild><a href="/auth">Enroll Now</a></Button>
+            <Button className="w-full" asChild><a href="/formations/fast-track">Voir le programme</a></Button>
           </motion.div>
 
           {/* Professional Diploma */}
@@ -68,8 +68,8 @@ const TrainingSection = () => {
               ))}
             </ul>
             <div className="flex gap-3">
-              <Button className="flex-1" asChild><a href="/auth">Enroll Now</a></Button>
-              <Button variant="outline" className="flex-1" asChild><a href="#modules">View Modules</a></Button>
+              <Button className="flex-1" asChild><a href="/formations/professional-diploma">Voir le programme</a></Button>
+              <Button variant="outline" className="flex-1" asChild><a href="/formations/professional-diploma#modules">Modules</a></Button>
             </div>
           </motion.div>
         </div>

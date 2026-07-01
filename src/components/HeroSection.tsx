@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
 import f6 from "@/assets/field/JJAC8844.jpg.asset.json";
+import f7 from "@/assets/field/SAXH8257.jpg.asset.json";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const slides = [f2.url, f6.url];
+const slides = [f2.url, f6.url, f7.url];
 
 const HeroSection = () => {
   const { t } = useLanguage();
