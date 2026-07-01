@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import { MessageSquare, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import banner from "@/assets/real/usfur-banner.jpg.asset.json";
 import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
-import cmr1 from "@/assets/real/meet-cmr-1.jpg.asset.json";
-import cmr2 from "@/assets/real/meet-cmr-2.jpg.asset.json";
 import f6 from "@/assets/field/JJAC8844.jpg.asset.json";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const slides = [banner.url, f2.url, cmr1.url, cmr2.url, f6.url];
+const slides = [f2.url, f6.url];
 
 const HeroSection = () => {
   const { t } = useLanguage();
