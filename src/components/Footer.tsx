@@ -1,5 +1,25 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faFacebookF, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
 const usfurLogo = usfurLogoAsset.url;
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/usfur_stories?igsh=MXFmMjcyY3VjMmFj",
+    icon: faInstagram,
+  },
+  {
+    name: "Facebook",
+    href: "https://web.facebook.com/profile.php?id=61589653911070",
+    icon: faFacebookF,
+  },
+  {
+    name: "LinkedIn",
+    href: "http://linkedin.com/company/usfur-finance-islamique-formation-conseil",
+    icon: faLinkedinIn,
+  },
+];
 
 const Footer = () => {
   return (
