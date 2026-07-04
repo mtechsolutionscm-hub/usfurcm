@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-import { CalendarCheck, MessageCircle, Mail } from "lucide-react";
+import { CalendarCheck, MessageCircle, Mail } from "@/components/icons";
 
 const WHATSAPP_NUMBER = "237690895554";
 const CONTACT_EMAIL = "contact@usfurcm.com";

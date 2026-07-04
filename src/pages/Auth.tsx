@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { BookOpen, Shield, Award } from "lucide-react";
+import { BookOpen, Shield, Award } from "@/components/icons";
 import usfurLogoAsset from "@/assets/usfur-logo-new.png.asset.json";
 const usfurLogo = usfurLogoAsset.url;
 import authBgAsset from "@/assets/real/usfur-classic.jpg.asset.json";

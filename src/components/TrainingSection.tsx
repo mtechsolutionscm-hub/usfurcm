@@ -1,4 +1,4 @@
-import { Check, Zap, Award } from "lucide-react";
+import { Check, Zap, Award } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 

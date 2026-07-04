@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ExternalLink, MessageCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, MessageCircle, ChevronLeft, ChevronRight } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";

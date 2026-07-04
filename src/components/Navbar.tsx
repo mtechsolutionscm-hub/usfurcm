@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, User, UserPlus, LogIn } from "lucide-react";
+import { Menu, X, User, UserPlus, LogIn } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";

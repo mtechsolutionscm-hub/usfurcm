@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, MessageCircle, Sparkles } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import ctaBgAsset from "@/assets/field/MCNP4527.jpg.asset.json";
 const ctaBg = ctaBgAsset.url;

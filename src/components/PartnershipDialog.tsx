@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/hooks/use-toast";
-import { MessageCircle, Mail, Handshake } from "lucide-react";
+import { MessageCircle, Mail, Handshake } from "@/components/icons";
 
 const WHATSAPP_NUMBER = "237690895554";
 const CONTACT_EMAIL = "contact@usfurcm.com";
