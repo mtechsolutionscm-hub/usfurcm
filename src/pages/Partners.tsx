@@ -1,4 +1,4 @@
-import { ArrowLeft, Globe2, MapPin, Handshake, CalendarCheck } from "lucide-react";
+import { ArrowLeft, Globe2, MapPin, Handshake, CalendarCheck } from "@/components/icons";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";

@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Montserrat', 'sans-serif'],
+        heading: ['"Space Grotesk"', 'sans-serif'],
         body: ['"DM Sans"', 'sans-serif'],
         'student-heading': ['Merriweather', 'serif'],
         'student-body': ['Lora', 'serif'],

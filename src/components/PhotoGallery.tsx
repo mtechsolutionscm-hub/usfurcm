@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "@/components/icons";
 
 import g1 from "@/assets/field/GTRR1012.jpg.asset.json";
 import g2 from "@/assets/field/IJGG5746.jpg.asset.json";

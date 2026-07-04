@@ -5,7 +5,7 @@ import {
   ArrowLeft, MessageCircle, Home, Compass, ClipboardCheck, Building2,
   TrendingUp, Scale, GraduationCap, Globe, Coins, Shield, FileText,
   Briefcase, PiggyBank, Landmark, HandCoins, BookOpen,
-} from "lucide-react";
+} from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";

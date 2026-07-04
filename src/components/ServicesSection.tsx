@@ -1,4 +1,4 @@
-import { Compass, ClipboardCheck, Building2, TrendingUp, Scale, GraduationCap, Globe, ChevronDown, ChevronUp } from "lucide-react";
+import { Compass, ClipboardCheck, Building2, TrendingUp, Scale, GraduationCap, Globe, ChevronDown, ChevronUp } from "@/components/icons";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";

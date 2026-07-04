@@ -1,5 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { Check, Zap, Award, Clock, Users, GraduationCap, MessageSquare, ArrowRight } from "lucide-react";
+import { Check, Zap, Award, Clock, Users, GraduationCap, MessageSquare, ArrowRight } from "@/components/icons";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";

@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle } from "@/components/icons";
 
 const faqs = [
   { q: "What is Islamic Finance?", a: "Islamic Finance is a financial system that operates according to Islamic law (Sharia). It prohibits interest (riba), excessive uncertainty (gharar), and investments in prohibited industries. Instead, it promotes risk-sharing, asset-backed transactions, and ethical investing." },

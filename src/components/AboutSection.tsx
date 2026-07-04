@@ -1,4 +1,4 @@
-import { Shield, Star, Heart, Lightbulb } from "lucide-react";
+import { Shield, Star, Heart, Lightbulb } from "@/components/icons";
 import { motion } from "framer-motion";
 import collage1Asset from "@/assets/field/JJAC8844.jpg.asset.json";
 import collage2Asset from "@/assets/field/HEDD9472.jpg.asset.json";

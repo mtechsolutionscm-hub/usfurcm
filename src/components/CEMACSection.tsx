@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ExternalLink, MessageCircle } from "lucide-react";
+import { ExternalLink, MessageCircle } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 

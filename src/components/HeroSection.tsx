@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MessageSquare, ArrowRight } from "lucide-react";
+import { MessageSquare, ArrowRight } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
