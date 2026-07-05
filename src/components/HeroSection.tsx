@@ -21,20 +21,19 @@ const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background carousel */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         <AnimatePresence mode="sync">
-          <motion.img
+          <motion.div
             key={index}
-            src={slides[index]}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full bg-center bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${slides[index]})` }}
             initial={{ opacity: 0, scale: 1.08 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 1.4 }, scale: { duration: 6, ease: "linear" } }}
           />
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/35 to-background/70 md:from-background/40 md:via-background/55 md:to-background/80" />
       </div>
 
       <div className="absolute -left-32 top-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
