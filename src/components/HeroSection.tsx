@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { MessageSquare, ArrowRight } from "@/components/icons";
+import { useEffect, useRef, useState } from "react";
+import { MessageSquare, ArrowRight, ChevronLeft, ChevronRight } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import f2 from "@/assets/field/IJGG5746.jpg.asset.json";
@@ -12,32 +12,98 @@ const slides = [f2.url, f6.url, f7.url];
 const HeroSection = () => {
   const { t } = useLanguage();
   const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const touchStartX = useRef<number | null>(null);
+  const touchDeltaX = useRef(0);
+  const paused = useRef(false);
+
+  const goTo = (i: number, dir: number = 1) => {
+    setDirection(dir);
+    setIndex((i + slides.length) % slides.length);
+  };
+  const next = () => goTo(index + 1, 1);
+  const prev = () => goTo(index - 1, -1);
 
   useEffect(() => {
-    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 5000);
+    const id = setInterval(() => {
+      if (!paused.current) {
+        setDirection(1);
+        setIndex((i) => (i + 1) % slides.length);
+      }
+    }, 5000);
     return () => clearInterval(id);
   }, []);
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    paused.current = true;
+    touchStartX.current = e.touches[0].clientX;
+    touchDeltaX.current = 0;
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+  };
+  const onTouchEnd = () => {
+    const dx = touchDeltaX.current;
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) next();
+      else prev();
+    }
+    touchStartX.current = null;
+    touchDeltaX.current = 0;
+    setTimeout(() => (paused.current = false), 300);
+  };
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden touch-pan-y select-none"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      onMouseEnter={() => (paused.current = true)}
+      onMouseLeave={() => (paused.current = false)}
+    >
       {/* Background carousel */}
       <div className="absolute inset-0 overflow-hidden">
-        <AnimatePresence mode="sync">
+        <AnimatePresence mode="sync" initial={false} custom={direction}>
           <motion.div
             key={index}
+            custom={direction}
             className="absolute inset-0 w-full h-full bg-center bg-cover bg-no-repeat"
             style={{ backgroundImage: `url(${slides[index]})` }}
-            initial={{ opacity: 0, scale: 1.08 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.4 }, scale: { duration: 6, ease: "linear" } }}
+            variants={{
+              enter: (d: number) => ({ opacity: 0, x: d > 0 ? 60 : -60, scale: 1.05 }),
+              center: { opacity: 1, x: 0, scale: 1 },
+              exit: (d: number) => ({ opacity: 0, x: d > 0 ? -60 : 60 }),
+            }}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ opacity: { duration: 1 }, x: { duration: 0.8, ease: "easeOut" }, scale: { duration: 6, ease: "linear" } }}
           />
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/35 to-background/70 md:from-background/40 md:via-background/55 md:to-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/35 via-background/50 to-background/80" />
       </div>
 
       <div className="absolute -left-32 top-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-32 bottom-1/4 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
+
+      {/* Prev / Next controls */}
+      <button
+        onClick={prev}
+        aria-label="Previous slide"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-background/60 hover:bg-background/80 backdrop-blur border border-border flex items-center justify-center text-foreground transition"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+      <button
+        onClick={next}
+        aria-label="Next slide"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-background/60 hover:bg-background/80 backdrop-blur border border-border flex items-center justify-center text-foreground transition"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
 
       <div className="relative z-10 container mx-auto px-4 text-center pt-24">
         <motion.div
@@ -107,7 +173,7 @@ const HeroSection = () => {
           {slides.map((_, i) => (
             <button
               key={i}
-              onClick={() => setIndex(i)}
+              onClick={() => goTo(i, i > index ? 1 : -1)}
               aria-label={`Slide ${i + 1}`}
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 i === index ? "w-8 bg-primary" : "w-2 bg-primary/30 hover:bg-primary/50"
