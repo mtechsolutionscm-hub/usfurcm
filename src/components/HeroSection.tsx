@@ -40,42 +40,6 @@ const HeroSection = () => {
       <div className="absolute -left-32 top-1/3 w-96 h-96 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-32 bottom-1/4 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
 
-      {/* Face-focus preview frame */}
-      <motion.div
-        className="hidden lg:block absolute right-8 xl:right-16 top-1/2 -translate-y-1/2 z-20"
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-      >
-        <div className="relative w-64 xl:w-80 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-primary/20 bg-card">
-          <AnimatePresence mode="sync">
-            <motion.img
-              key={`face-${index}`}
-              src={slides[index]}
-              alt="Aperçu professionnel"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: "center 22%", transform: "scale(1.6)" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-            />
-          </AnimatePresence>
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-background/95 via-background/70 to-transparent p-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-              <span className="text-[10px] uppercase tracking-widest text-secondary font-semibold">En direct</span>
-            </div>
-            <p className="text-sm font-heading font-semibold text-foreground">Experts en Finance Islamique</p>
-            <p className="text-xs text-muted-foreground">Rencontres & missions institutionnelles</p>
-          </div>
-          <div className="absolute top-3 left-3 px-2 py-1 rounded-md bg-primary/90 backdrop-blur text-primary-foreground text-[10px] font-medium tracking-wide">
-            USFUR • {String(index + 1).padStart(2, "0")}
-          </div>
-        </div>
-      </motion.div>
-
-      <div className="relative z-10 container mx-auto px-4 text-center pt-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
