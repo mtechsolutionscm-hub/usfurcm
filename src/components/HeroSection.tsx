@@ -72,9 +72,14 @@ const HeroSection = () => {
             custom={direction}
             className="absolute inset-0 w-full h-full bg-center bg-cover bg-no-repeat"
             style={{ backgroundImage: `url(${slides[index]})` }}
-            initial={(d: number) => ({ opacity: 0, x: d > 0 ? 60 : -60, scale: 1.05 })}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={(d: number) => ({ opacity: 0, x: d > 0 ? -60 : 60 })}
+            variants={{
+              enter: (d: number) => ({ opacity: 0, x: d > 0 ? 60 : -60, scale: 1.05 }),
+              center: { opacity: 1, x: 0, scale: 1 },
+              exit: (d: number) => ({ opacity: 0, x: d > 0 ? -60 : 60 }),
+            }}
+            initial="enter"
+            animate="center"
+            exit="exit"
             transition={{ opacity: { duration: 1 }, x: { duration: 0.8, ease: "easeOut" }, scale: { duration: 6, ease: "linear" } }}
           />
         </AnimatePresence>
