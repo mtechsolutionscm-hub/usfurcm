@@ -1,0 +1,3 @@
+<?php
+declare(strict_types=1);
+return ['db'=>['host'=>getenv('USFUR_DB_HOST')?:'localhost','name'=>getenv('USFUR_DB_NAME')?:'YOUR_DATABASE','user'=>getenv('USFUR_DB_USER')?:'YOUR_DB_USER','pass'=>getenv('USFUR_DB_PASS')?:'YOUR_DB_PASSWORD'],'mtech'=>['whatsapp'=>'237656987759','message'=>'Bonjour MTECHsolutions, je souhaite demander des services pour mon projet.'],'app'=>'USFUR Islamic Finance Training & Consulting'];
