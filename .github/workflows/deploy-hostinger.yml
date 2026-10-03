@@ -1,34 +1,49 @@
-name: Deploy to Hostinger
+name: Build & Deploy to Hostinger
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      # Public backend keys (safe to ship in the browser) - no GitHub secrets needed
       - name: Build
         run: npm run build
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
-          VITE_SUPABASE_PROJECT_ID: ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
+          VITE_SUPABASE_URL: https://fgdssgwrcihdaptrfqxf.supabase.co
+          VITE_SUPABASE_PROJECT_ID: fgdssgwrcihdaptrfqxf
+          VITE_SUPABASE_PUBLISHABLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnZHNzZ3dyY2loZGFwdHJmcXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3NTkyNTIsImV4cCI6MjA4NjMzNTI1Mn0.yNB88c8Yl2lnWMOwjEoLl0fapojCeS-da561pQoqA3Y
 
-      - name: Deploy to Hostinger via FTP
+      # Ready-to-host site published to the "hostinger" branch (Hostinger hPanel > Git deploys this branch)
+      - name: Publish build to "hostinger" branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: hostinger
+          force_orphan: true
+          enable_jekyll: true
+
+      # Optional: direct FTP upload, runs only if FTP_SERVER secret is set
+      - name: Deploy via FTP (optional)
+        if: ${{ env.FTP_SERVER != '' }}
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
