@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0d6b3d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="USFUR" />
+    <link rel="apple-touch-icon" href="/favicon.jpg" />
+    <title>USFUR - Finance Islamique</title>
+    <meta name="description" content="USFUR Islamic Finance Training &amp; Consulting - Formation et conseil en finance islamique">
+    <meta name="author" content="USFUR" />
+    
+    
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:title" content="USFUR - Finance Islamique">
+  <meta name="twitter:title" content="USFUR - Finance Islamique">
+  <meta property="og:description" content="USFUR Islamic Finance Training &amp; Consulting - Formation et conseil en finance islamique">
+  <meta name="twitter:description" content="USFUR Islamic Finance Training &amp; Consulting - Formation et conseil en finance islamique">
+  <link rel="icon" type="image/jpeg" href="/favicon.jpg">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx?t=1791046429132"></script>
+  </body>
+</html>
